@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slash</title>
+</head>
+<body>
+    
+
+<h1>type your task</h1>
+
+
+<form action="/created" method="post">
+
+
+<input type="text" placeholder="enter task name" name="filename" class="filename"><br><br>
+<textarea name="textarea" class="textarea"></textarea><br><br>
+<input type="submit">
+
+
+</form>
+
+
+<script src=".\public\js\taskmaking.js"> 
+
+    
+let textarea=document.querySelector(".textarea");
+let filename=document.querySelector(".filename");
+
+if(textarea.value==="" || filename.value ==="")
+{
+    alert("please complete the required details")
+}
+</script>
+
+</body>
+</html>

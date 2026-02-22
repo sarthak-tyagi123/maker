@@ -1,0 +1,10 @@
+.div_task{
+
+    border: 2px solid blueviolet;
+    height:32px;
+    width: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Builder</title>
+  <style>
+    body {
+        font-family: "Times New Roman", serif;
+        background: #eaeaea;
+        display: flex;
+        justify-content: center;
+        padding: 30px;
+        gap: 40px;
+    }
+
+    /* FORM SIDE */
+    .container {
+        width: 45%;
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 10px;
+        background: black;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: 0.85;
+    }
+
+    /* PREVIEW SIDE */
+    .preview {
+        width: 45%;
+        background: white;
+        padding: 40px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .preview img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        position: absolute;
+        right: 60px;
+        top: 60px;
+        object-fit: cover;
+    }
+
+    .preview h1 {
+        text-align: center;
+        font-size: 26px;
+        margin-bottom: 5px;
+    }
+
+    .preview .contact {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        font-weight: bold;
+        margin-top: 20px;
+        border-bottom: 1px solid black;
+        padding-bottom: 3px;
+    }
+
+    .entry {
+        margin-top: 8px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .entry-left {
+        width: 70%;
+    }
+
+    .entry-right {
+        width: 30%;
+        text-align: right;
+    }
+
+    ul {
+        margin-top: 5px;
+        padding-left: 20px;
+    }
+
+    @media (max-width: 900px) {
+        body {
+            flex-direction: column;
+            align-items: center;
+        }
+        .container, .preview {
+            width: 100%;
+        }
+    }
+</style>
+
+
+</head>
+<body>
+    <div class="container">
+        <h1>Create Resume</h1>
+        <form action="/generate" method="POST" enctype="multipart/form-data" id="resumeForm">
+            <h2>Upload Photo</h2>
+            <input type="file" name="photo" id="photoInput" accept="image/*">
+            <h2>Personal Info</h2>
+            <input type="text" name="fullName" id="fullName" placeholder="Full Name">
+            <input type="email" name="email" id="email" placeholder="Email">
+            <input type="text" name="phone" id="phone" placeholder="Phone">
+            <input type="text" name="address" id="address" placeholder="Address">
+            <input type="url" name="linkedin" id="linkedin" placeholder="LinkedIn URL">
+            <input type="url" name="github" id="github" placeholder="GitHub URL">
+            <h2>Summary</h2>
+            <textarea name="summary" id="summary" rows="3" placeholder="Professional Summary"></textarea>
+            <h2>Skills</h2>
+            <input type="text" name="skills" id="skills" placeholder="HTML,CSS,JS">
+            <h2>Education</h2>
+            <input type="text" name="degree" id="degree" placeholder="Degree">
+            <input type="text" name="college" id="college" placeholder="College">
+            <input type="text" name="eduYear" id="eduYear" placeholder="Year">
+            <h2>Experience</h2>
+            <input type="text" name="company" id="company" placeholder="Company">
+            <input type="text" name="position" id="position" placeholder="Position">
+            <input type="text" name="expYear" id="expYear" placeholder="Duration">
+            <textarea name="jobDesc" id="jobDesc" rows="3" placeholder="Job Description"></textarea>
+            <h2>Projects</h2>
+            <input type="text" name="projectTitle" id="projectTitle" placeholder="Project">
+            <textarea name="projectDesc" id="projectDesc" rows="3" placeholder="Project Description"></textarea>
+            <h2>Certifications</h2>
+            <input type="text" name="certifications" id="certifications" placeholder="Certification">
+            <h2>Languages</h2>
+            <input type="text" name="languages" id="languages" placeholder="English,Hindi">
+            <button type="submit">Generate Resume</button>
+        </form>
+    </div>
+
+    <div class="preview" id="preview">
+        <img id="photoPreview" src="">
+        <h1 id="previewFullName">Full Name</h1>
+        <p id="previewEmail">Email:</p>
+        <p id="previewPhone">Phone:</p>
+        <p id="previewAddress">Address:</p>
+        <p id="previewLinkedin">LinkedIn:</p>
+        <p id="previewGithub">GitHub:</p>
+        <hr>
+        <h2>Summary</h2><p id="previewSummary"></p>
+        <hr>
+        <h2>Skills</h2><p id="previewSkills"></p>
+        <hr>
+        <h2>Education</h2>
+        <p id="previewDegree"></p>
+        <p id="previewCollegeYear"></p>
+        <hr>
+        <h2>Experience</h2>
+        <p id="previewCompany"></p>
+        <p id="previewPosition"></p>
+        <p id="previewExpYear"></p>
+        <p id="previewJobDesc"></p>
+        <hr>
+        <h2>Projects</h2>
+        <p id="previewProjectTitle"></p>
+        <p id="previewProjectDesc"></p>
+        <hr>
+        <h2>Certifications</h2><p id="previewCertifications"></p>
+        <hr>
+        <h2>Languages</h2><p id="previewLanguages"></p>
+    </div>
+
+    <script>
+        const fields = ['fullName' ,'email','phone','address','linkedin','github','summary','skills','degree','college','eduYear','company','position','expYear','jobDesc','projectTitle','projectDesc','certifications','languages'];
+        fields.forEach(f=>{
+            const input = document.getElementById(f);
+            input.addEventListener('input', ()=>{
+                const el = document.getElementById('preview'+capitalize(f));
+                if(el) el.innerText = input.value;
+                if(f==='college'||f==='eduYear'){
+                    document.getElementById('previewCollegeYear').innerText = document.getElementById('college').value + ' - ' + document.getElementById('eduYear').value;
+                }
+            });
+        });
+        const photoInput = document.getElementById('photoInput');
+        const photoPreview = document.getElementById('photoPreview');
+        photoInput.addEventListener('change', e=>{
+            const file = e.target.files[0];
+            if(file) photoPreview.src = URL.createObjectURL(file);
+        });
+        function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+    </script>
+</body>
+</html>

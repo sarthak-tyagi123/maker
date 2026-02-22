@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Resume Builder</title>
+
+<style>
+body {
+    font-family: "Times New Roman", serif;
+    background: #eaeaea;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    gap: 40px;
+}
+
+/* FORM */
+.container {
+    width: 45%;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* PREVIEW */
+.preview {
+    width: 45%;
+    background: white;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.preview img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    position: absolute;
+    right: 60px;
+    top: 40px;
+    object-fit: cover;
+}
+
+.preview h1 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.contact {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 20px;
+    border-bottom: 1px solid black;
+    padding-bottom: 3px;
+}
+
+.entry {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.entry-left { width: 70%; }
+.entry-right { width: 30%; text-align: right; }
+
+ul {
+    margin-top: 5px;
+    padding-left: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Create Resume</h1>
+    <form>
+
+        <h2>Upload Photo</h2>
+        <input type="file" id="photoInput" accept="image/*">
+
+        <h2>Personal Info</h2>
+        <input type="text" id="fullName" placeholder="Full Name">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="phone" placeholder="Phone">
+        <input type="text" id="address" placeholder="Address">
+        <input type="url" id="github" placeholder="GitHub">
+
+
+        <h2>Education</h2>
+        <input type="text" id="degree" placeholder="Degree">
+        <input type="text" id="college" placeholder="College">
+        <input type="text" id="eduYear" placeholder="Year">
+
+        <h2>Experience</h2>
+        <input type="text" id="company" placeholder="Company">
+        <input type="text" id="position" placeholder="Position">
+        <input type="text" id="expYear" placeholder="Duration">
+        <textarea id="jobDesc" rows="2" placeholder="Job Description"></textarea>
+
+        <h2>Projects</h2>
+        <input type="text" id="projectTitle" placeholder="Project Title">
+        <textarea id="projectDesc" rows="2" placeholder="Project Description"></textarea>
+
+    </form>
+</div>
+
+
+<div class="preview">
+
+    <img id="photoPreview">
+
+    <h1 id="previewFullName">Your Name</h1>
+
+    <div class="contact">
+        <span id="previewAddress"></span> |
+        <span id="previewPhone"></span> |
+        <span id="previewEmail"></span> |
+        <span id="previewGithub"></span>
+    </div>
+
+    <div class="section-title">Education</div>
+    <div class="entry">
+        <div class="entry-left">
+            <strong id="previewDegree"></strong><br>
+            <span id="previewCollege"></span>
+        </div>
+        <div class="entry-right" id="previewEduYear"></div>
+    </div>
+
+    <div class="section-title">Technical Skills</div>
+    <p><strong>Skills:</strong> <span id="previewSkills"></span></p>
+
+    <div class="section-title">Experience</div>
+    <div class="entry">
+        <div class="entry-left">
+            <strong id="previewCompany"></strong><br>
+            <span id="previewPosition"></span>
+        </div>
+        <div class="entry-right" id="previewExpYear"></div>
+    </div>
+    <ul>
+        <li id="previewJobDesc"></li>
+    </ul>
+
+    <div class="section-title">Projects</div>
+    <div class="entry">
+        <div class="entry-left">
+            <strong id="previewProjectTitle"></strong>
+        </div>
+    </div>
+    <ul>
+        <li id="previewProjectDesc"></li>
+    </ul>
+
+</div>
+
+
+<script>
+
+// Helper function
+function linkInput(inputId, previewId){
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+
+    input.addEventListener("input", ()=>{
+        preview.innerText = input.value;
+    });
+}
+
+linkInput("fullName","previewFullName");
+linkInput("email","previewEmail");
+linkInput("phone","previewPhone");
+linkInput("address","previewAddress");
+linkInput("github","previewGithub");
+linkInput("degree","previewDegree");
+linkInput("college","previewCollege");
+linkInput("eduYear","previewEduYear");
+linkInput("skills","previewSkills");
+linkInput("company","previewCompany");
+linkInput("position","previewPosition");
+linkInput("expYear","previewExpYear");
+linkInput("jobDesc","previewJobDesc");
+linkInput("projectTitle","previewProjectTitle");
+linkInput("projectDesc","previewProjectDesc");
+
+// Photo preview
+document.getElementById("photoInput").addEventListener("change", function(e){
+    const file = e.target.files[0];
+    if(file){
+        document.getElementById("photoPreview").src = URL.createObjectURL(file);
+    }
+});
+
+</script>
+
+</body>
+</html>

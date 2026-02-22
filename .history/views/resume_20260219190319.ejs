@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Resume Builder</title>
+
+<style>
+body {
+    font-family: "Times New Roman", serif;
+    background: #eaeaea;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    gap: 40px;
+}
+
+/* FORM */
+.container {
+    width: 45%;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 6px 10px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* PREVIEW */
+.preview {
+    width: 45%;
+    background: white;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.preview img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    position: absolute;
+    right: 60px;
+    top: 40px;
+    object-fit: cover;
+}
+
+.preview h1 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.contact {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 20px;
+    border-bottom: 1px solid black;
+    padding-bottom: 3px;
+}
+
+.entry {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.entry-left { width: 70%; }
+.entry-right { width: 30%; text-align: right; }
+
+ul {
+    margin-top: 5px;
+    padding-left: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Create Resume</h1>
+
+<h2>Upload Photo</h2>
+<input type="file" id="photoInput" accept="image/*">
+
+<h2>Personal Info</h2>
+<input type="text" id="fullName" placeholder="Full Name">
+<input type="email" id="email" placeholder="Email">
+<input type="text" id="phone" placeholder="Phone">
+<input type="text" id="address" placeholder="Address">
+<input type="url" id="github" placeholder="GitHub">
+
+<h2>Education <button type="button" onclick="addEdu()">+</button></h2>
+<div id="eduBox"></div>
+
+<h2>Skills</h2>
+<input type="text" id="skills" placeholder="HTML, CSS, JS">
+
+<h2>Projects <button type="button" onclick="addProject()">+</button></h2>
+<div id="projectBox"></div>
+
+<h2>Experience <button type="button" onclick="addExp()">+</button></h2>
+<div id="expBox"></div>
+
+</div>
+
+<!-- PREVIEW -->
+
+<div class="preview">
+
+<img id="photoPreview">
+
+<h1 id="previewFullName">Your Name</h1>
+
+<div class="contact">
+<span id="previewAddress"></span> |
+<span id="previewPhone"></span> |
+<span id="previewEmail"></span> |
+<span id="previewGithub"></span>
+</div>
+
+<div class="section-title">Education</div>
+<div id="previewEducation"></div>
+
+<div class="section-title">Technical Skills</div>
+<p><strong>Skills:</strong> <span id="previewSkills"></span></p>
+
+<div class="section-title">Experience</div>
+<div id="previewExperience"></div>
+
+<div class="section-title">Projects</div>
+<div id="previewProjects"></div>
+
+</div>
+
+<script>
+
+/* PERSONAL INFO */
+function linkInput(id, previewId){
+document.getElementById(id).addEventListener("input", function(){
+document.getElementById(previewId).innerText = this.value;
+});
+}
+
+linkInput("fullName","previewFullName");
+linkInput("email","previewEmail");
+linkInput("phone","previewPhone");
+linkInput("address","previewAddress");
+linkInput("github","previewGithub");
+linkInput("skills","previewSkills");
+
+/* EDUCATION */
+function addEdu(){
+document.getElementById("eduBox").innerHTML += `
+<div>
+<input type="text" placeholder="Degree" oninput="renderEdu()">
+<input type="text" placeholder="College" oninput="renderEdu()">
+<input type="text" placeholder="Year" oninput="renderEdu()">
+<button type="button" onclick="this.parentElement.remove(); renderEdu()">X</button>
+</div>`;
+}
+
+function renderEdu(){
+let preview = document.getElementById("previewEducation");
+preview.innerHTML = "";
+document.querySelectorAll("#eduBox div").forEach(block=>{
+let inputs = block.querySelectorAll("input");
+preview.innerHTML += `
+<div class="entry">
+<div class="entry-left">
+<strong>${inputs[0].value}</strong><br>
+${inputs[1].value}
+</div>
+<div class="entry-right">
+${inputs[2].value}
+</div>
+</div>`;
+});
+}
+
+/* PROJECT */
+function addProject(){
+document.getElementById("projectBox").innerHTML += `
+<div>
+<input type="text" placeholder="Project Title" oninput="renderProject()">
+<textarea placeholder="Project Description" oninput="renderProject()"></textarea>
+<button type="button" onclick="this.parentElement.remove(); renderProject()">X</button>
+</div>`;
+}
+
+function renderProject(){
+let preview = document.getElementById("previewProjects");
+preview.innerHTML = "";
+document.querySelectorAll("#projectBox div").forEach(block=>{
+let inputs = block.querySelectorAll("input, textarea");
+preview.innerHTML += `
+<div class="entry">
+<div class="entry-left">
+<strong>${inputs[0].value}</strong>
+</div>
+</div>
+<ul><li>${inputs[1].value}</li></ul>`;
+});
+}
+
+/* EXPERIENCE */
+function addExp(){
+document.getElementById("expBox").innerHTML += `
+<div>
+<input type="text" placeholder="Company" oninput="renderExp()">
+<input type="text" placeholder="Position" oninput="renderExp()">
+<input type="text" placeholder="Duration" oninput="renderExp()">
+<textarea placeholder="Job Description" oninput="renderExp()"></textarea>
+<button type="button" onclick="this.parentElement.remove(); renderExp()">X</button>
+</div>`;
+}
+
+function renderExp(){
+let preview = document.getElementById("previewExperience");
+preview.innerHTML = "";
+document.querySelectorAll("#expBox div").forEach(block=>{
+let inputs = block.querySelectorAll("input, textarea");
+preview.innerHTML += `
+<div class="entry">
+<div class="entry-left">
+<strong>${inputs[0].value}</strong><br>
+${inputs[1].value}
+</div>
+<div class="entry-right">
+${inputs[2].value}
+</div>
+</div>
+<ul><li>${inputs[3].value}</li></ul>`;
+});
+}
+
+/* PHOTO */
+document.getElementById("photoInput").addEventListener("change", function(e){
+let file = e.target.files[0];
+if(file){
+document.getElementById("photoPreview").src = URL.createObjectURL(file);
+}
+});
+
+</script>
+
+</body>
+</html>

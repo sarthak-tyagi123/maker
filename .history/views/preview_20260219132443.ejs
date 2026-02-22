@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Resume</title>
+</head>
+<body>
+
+    <h1><%= data.name %></h1>
+    <p>Email: <%= data.email %></p>
+    <p>Phone: <%= data.phone %></p>
+    <p>Address: <%= data.address %></p>
+
+    <hr>
+
+    <h2>Education</h2>
+    <p><strong><%= data.degree %></strong></p>
+    <p><%= data.college %> - <%= data.year %></p>
+
+    <hr>
+
+    <h2>Skills</h2>
+    <p><%= data.skills %></p>
+
+    <hr>
+
+    <h2>Experience</h2>
+    <p><strong><%= data.company %></strong></p>
+    <p><%= data.role %></p>
+    <p><%= data.duration %></p>
+
+</body>
+</html>

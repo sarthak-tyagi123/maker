@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= data.fullName %> - Resume</title>
+    <style>
+        body{font-family:"Times New Roman";background:#eaeaea;padding:30px;}
+        .resume{width:800px;margin:auto;background:#fff;padding:40px;box-shadow:0 0 20px rgba(0,0,0,0.1);}
+        h1{text-align:center;margin-bottom:20px;}
+        .header{display:flex;justify-content:space-between;}
+        .left{width:70%;}
+        img{width:100px;height:100px;border-radius:50%;object-fit:cover;}
+        .section-title{font-weight:bold;margin-top:20px;border-bottom:1px solid #000;}
+        .entry{display:flex;justify-content:space-between;margin-top:8px;}
+        .entry-left{width:70%;}
+        .entry-right{width:30%;text-align:right;}
+        ul{padding-left:20px;}
+
+    .download-btn{
+    position:absolute;
+    right:40px;
+    top:40px;
+    padding:6px 12px;
+    background:#06c8d2;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+/* Layout improvement */
+.resume{
+    width:850px;   /* pehle 800 tha — thoda wide */
+    margin:20px auto;  /* upar ka space kam */
+    padding:35px;  /* thoda compact */
+}
+
+/* Name upar thoda tight */
+h1{
+    text-align:center;
+    margin-top:0;     /* upar gap remove */
+    margin-bottom:15px;
+}
+
+/* PRINT */
+@media print {
+
+    body{
+        background:white;
+        margin:0;
+        padding:0;
+    }
+
+    .download-btn{
+        display:none;
+    }
+
+    .resume{
+        width:850px;
+        margin:0 auto;
+        margin-top: -20px; /* thoda upar */
+        box-shadow:none;
+        padding:35px;
+    }
+
+}
+    </style>
+</head>
+<body>
+
+<div class="resume">
+
+<h1><%= data.fullName %></h1>
+
+<div class="header">
+    <div class="left">
+        <div><%= data.phone %></div>
+        <div><%= data.address %></div>
+        <div><%= data.email %></div>
+        <div><%= data.linkedin %></div>
+        <div><%= data.github %></div>
+    </div>
+    <% if(data.photo){ %>
+        <img src="<%= data.photo %>">
+    <% } %>
+</div>
+
+
+<!-- EDUCATION -->
+<% if(data.degree){ %>
+<div class="section-title">Education</div>
+
+<%
+const degree = [].concat(data.degree);
+const college = [].concat(data.college);
+const year = [].concat(data.year);
+const cgpa = [].concat(data.cgpa);
+%>
+
+<% for(let i=0;i<degree.length;i++){ %>
+<div class="entry">
+    <div class="entry-left">
+        <strong><%= degree[i] %></strong><br>
+        <%= college[i] %>
+    </div>
+    <div class="entry-right">
+        <%= year[i] %> | <%= cgpa[i] %>
+    </div>
+</div>
+<% } %>
+<% } %>
+
+
+<!-- SKILLS -->
+<% if(data.skill){ %>
+<div class="section-title">Skills</div>
+<ul>
+<% [].concat(data.skill).forEach(s=>{ %>
+<li><%= s %></li>
+<% }) %>
+</ul>
+<% } %>
+
+
+<!-- EXPERIENCE -->
+<% if(data.company){ %>
+<div class="section-title">Experience</div>
+
+<%
+const company=[].concat(data.company);
+const position=[].concat(data.position);
+const expYear=[].concat(data.expYear);
+const expDesc=[].concat(data.expDesc);
+%>
+
+<% for(let i=0;i<company.length;i++){ %>
+<div class="entry">
+    <div class="entry-left">
+        <strong><%= company[i] %></strong><br>
+        <%= position[i] %>
+    </div>
+    <div class="entry-right">
+        <%= expYear[i] %>
+    </div>
+</div>
+<ul><li><%= expDesc[i] %></li></ul>
+<% } %>
+<% } %>
+
+
+<!-- PROJECT -->
+<% if(data.projectTitle){ %>
+<div class="section-title">Projects</div>
+<% [].concat(data.projectTitle).forEach((p,i)=>{ %>
+<strong><%= p %></strong>
+<ul><li><%= [].concat(data.projectDesc)[i] %></li></ul>
+<% }) %>
+<% } %>
+
+
+<!-- INTERNSHIP -->
+<% if(data.internCompany){ %>
+<div class="section-title">Internships</div>
+<%
+const internCompany=[].concat(data.internCompany);
+const internRole=[].concat(data.internRole);
+const internDuration=[].concat(data.internDuration);
+const internDesc=[].concat(data.internDesc);
+%>
+<% for(let i=0;i<internCompany.length;i++){ %>
+<div class="entry">
+    <div class="entry-left">
+        <strong><%= internCompany[i] %></strong><br>
+        <%= internRole[i] %>
+    </div>
+    <div class="entry-right">
+        <%= internDuration[i] %>
+    </div>
+</div>
+<ul><li><%= internDesc[i] %></li></ul>
+<% } %>
+<% } %>
+
+
+<!-- CERTIFICATES -->
+<% if(data.certificateTitle){ %>
+<div class="section-title">Certificates</div>
+<% [].concat(data.certificateTitle).forEach((c,i)=>{ %>
+<strong><%= c %></strong>
+<div><%= [].concat(data.certificateOrg)[i] %></div>
+<ul><li><%= [].concat(data.certificateDesc)[i] %></li></ul>
+<% }) %>
+<% } %>
+
+
+<!-- HOBBIES -->
+<% if(data.hobby){ %>
+<div class="section-title">Hobbies</div>
+<ul>
+<% [].concat(data.hobby).forEach(h=>{ %>
+<li><%= h %></li>
+<% }) %>
+</ul>
+<% } %>
+
+
+<!-- LANGUAGES -->
+<% if(data.language){ %>
+<div class="section-title">Languages</div>
+<ul>
+<% [].concat(data.language).forEach(l=>{ %>
+<li><%= l %></li>
+<% }) %>
+</ul>
+<% } %>
+
+</div>
+
+<button class="download-btn" onclick="window.print()">Download</button>
+</body>
+</html>

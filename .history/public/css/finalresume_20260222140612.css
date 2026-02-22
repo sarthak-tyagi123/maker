@@ -1,0 +1,68 @@
+
+        body{font-family:"Times New Roman";background:#eaeaea;padding:30px;}
+        .resume{width:800px;margin:auto;background:#fff;padding:40px;box-shadow:0 0 20px rgba(0,0,0,0.1);}
+        h1{text-align:center;margin-bottom:20px;}
+        .header{display:flex;justify-content:space-between;}
+        .left{width:70%;}
+        img{width:100px;height:100px;border-radius:50%;object-fit:cover;}
+        .section-title{font-weight:bold;margin-top:20px;border-bottom:1px solid #000;}
+        .entry{display:flex;justify-content:space-between;margin-top:8px;}
+        .entry-left{width:70%;}
+        .entry-right{width:30%;text-align:right;}
+        ul{padding-left:20px;}
+
+   .download-btn{
+    position:absolute;
+    right:40px;
+    top:40px;
+    padding:6px 12px;
+    background:#06c8d2;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+/* Layout improvement */
+.resume{
+    width:850px;
+    margin:15px auto;   /* thoda aur upar se tight */
+    padding:35px;
+}
+
+/* Name upar tight */
+h1{
+    text-align:center;
+    margin-top:0;
+    margin-bottom:15px;
+}
+
+/* PRINT FIX */
+@page{
+    size:auto;      /* page height auto */
+    margin:8mm;     /* chhota margin */
+}
+
+@media print {
+
+    body{
+        background:white;
+        margin:0;
+        padding:0;
+    }
+
+    .download-btn{
+        display:none;
+    }
+
+    .resume{
+        width:850px;
+        margin:0 auto;
+        padding:35px;
+        box-shadow:none;
+        height:auto;              /* important */
+        page-break-after:avoid;   /* extra page avoid */
+    }
+
+}
+    

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>TaskMe</h2>
+    <ul>
+        <li>Dashboard</li>
+        <li>Tasks</li>
+        <li>Completed</li>
+        <li>In Progress</li>
+        <li>Team</li>
+    </ul>
+</div>
+
+<div class="main">
+    <h1>Dashboard</h1>
+
+    <div class="cards">
+        <div class="card">Total Tasks: <%= tasks.length %></div>
+        <div class="card">Completed</div>
+        <div class="card">In Progress</div>
+    </div>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+        </tr>
+
+        <% tasks.forEach(function(task){ %>
+            <tr>
+                <td><%= task.title %></td>
+                <td><%= task.priority %></td>
+                <td><%= task.status %></td>
+            </tr>
+        <% }) %>
+
+    </table>
+
+</div>
+
+</body>
+</html>

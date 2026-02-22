@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Builder</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+.container {
+    width: 60%;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    margin-top: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: #00c896;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #009e75;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Create Your Resume</h1>
+
+    <form action="/generate" method="POST">
+
+        <!-- PERSONAL INFO -->
+        <h2>Personal Information</h2>
+        <input type="text" name="fullName" placeholder="Full Name" >
+        <input type="text" name="jobTitle" placeholder="Professional Title">
+        <input type="email" name="email" placeholder="Email">
+        <input type="text" name="phone" placeholder="Phone">
+        <input type="text" name="address" placeholder="Address">
+        <input type="url" name="linkedin" placeholder="LinkedIn URL">
+        <input type="url" name="github" placeholder="GitHub URL">
+
+        <!-- PROFESSIONAL SUMMARY -->
+        <h2>Professional Summary</h2>
+        <textarea name="summary" rows="4" placeholder="Write short professional summary..."></textarea>
+
+        <!-- SKILLS -->
+        <h2>Skills</h2>
+        <input type="text" name="skills" placeholder="Comma separated (HTML, CSS, JS)">
+
+        <!-- EDUCATION -->
+        <h2>Education</h2>
+        <input type="text" name="degree" placeholder="Degree">
+        <input type="text" name="college" placeholder="College/University">
+        <input type="text" name="eduYear" placeholder="Year">
+
+        <!-- EXPERIENCE -->
+        <h2>Work Experience</h2>
+        <input type="text" name="company" placeholder="Company Name">
+        <input type="text" name="position" placeholder="Job Role">
+        <input type="text" name="expYear" placeholder="Duration (2023-2024)">
+        <textarea name="jobDesc" rows="3" placeholder="Describe your work..."></textarea>
+
+        <!-- PROJECTS -->
+        <h2>Projects</h2>
+        <input type="text" name="projectTitle" placeholder="Project Title">
+        <textarea name="projectDesc" rows="3" placeholder="Project Description"></textarea>
+
+        <!-- CERTIFICATIONS -->
+        <h2>Certifications</h2>
+        <input type="text" name="certifications" placeholder="Certification name">
+
+        <!-- LANGUAGES -->
+        <h2>Languages</h2>
+        <input type="text" name="languages" placeholder="English, Hindi">
+
+        <button type="submit">Generate Resume</button>
+
+    </form>
+</div>
+
+</body>
+</html>

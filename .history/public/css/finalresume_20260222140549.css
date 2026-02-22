@@ -1,0 +1,172 @@
+
+        body{font-family:"Times New Roman";background:#eaeaea;padding:30px;}
+        .resume{width:800px;margin:auto;background:#fff;padding:40px;box-shadow:0 0 20px rgba(0,0,0,0.1);}
+        h1{text-align:center;margin-bottom:20px;}
+        .header{display:flex;justify-content:space-between;}
+        .left{width:70%;}
+        img{width:100px;height:100px;border-radius:50%;object-fit:cover;}
+        .section-title{font-weight:bold;margin-top:20px;border-bottom:1px solid #000;}
+        .entry{display:flex;justify-content:space-between;margin-top:8px;}
+        .entry-left{width:70%;}
+        .entry-right{width:30%;text-align:right;}
+        ul{padding-left:20px;}
+
+   .download-btn{
+    position:absolute;
+    right:40px;
+    top:40px;
+    padding:6px 12px;
+    background:#06c8d2;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+/* Layout improvement */
+.resume{
+    width:850px;
+    margin:15px auto;   /* thoda aur upar se tight */
+    padding:35px;
+}
+
+/* Name upar tight */
+h1{
+    text-align:center;
+    margin-top:0;
+    margin-bottom:15px;
+}
+
+/* PRINT FIX */
+@page{
+    size:auto;      /* page height auto */
+    margin:8mm;     /* chhota margin */
+}
+
+@media print {
+
+    body{
+        background:white;
+        margin:0;
+        padding:0;
+    }
+
+    .download-btn{
+        display:none;
+    }
+
+    .resume{
+        width:850px;
+        margin:0 auto;
+        padding:35px;
+        box-shadow:none;
+        height:auto;              /* important */
+        page-break-after:avoid;   /* extra page avoid */
+    }
+
+}
+    </style>
+
+
+<!-- body {
+    font-family:"Times New Roman", serif;
+    background:#eaeaea;
+    padding:30px;
+}
+.resume{
+    width:850px;
+    margin:15px auto;
+    padding:30px;
+    background:#fff;
+    box-shadow:0 0 20px rgba(0,0,0,0.1);
+}
+h1{
+    text-align:center;
+    margin-top:0;
+    margin-bottom:15px;
+    font-size:22px; /* chhota font */
+}
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+.left{
+    width:70%;
+}
+img{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    object-fit:cover;
+}
+.section-title{
+    font-weight:bold;
+    margin-top:18px;
+    border-bottom:1px solid #000;
+    font-size:14px; /* chhota font */
+}
+.entry{
+    display:flex;
+    justify-content:space-between;
+    margin-top:6px;
+    font-size:13px; /* chhota font */
+}
+.entry-left{ width:70%; }
+.entry-right{ width:30%; text-align:right; }
+ul{ padding-left:18px; font-size:13px; }
+
+.download-btn{
+    position:absolute;
+    right:30px;
+    top:30px;
+    padding:5px 10px;
+    background:#06c8d2;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+/* Tablet: 481px - 1024px */
+@media (min-width:481px) and (max-width:1024px){
+    .resume{
+        width:95%;
+        margin:15px auto;
+        padding:25px;
+    }
+    h1{ font-size:20px; }
+    .section-title{ font-size:13px; }
+    .entry, ul{ font-size:12px; }
+    img{ width:80px; height:80px; }
+}
+/* Mobile: max-width 480px */
+@media (max-width:480px){
+    .resume{
+        width:95%;
+        margin:8px auto;
+        padding:12px;      /* thoda kam padding */
+        font-size:10px;    /* aur chhota text */
+        transform: scale(0.95); /* thoda zoom out */
+        transform-origin: top center;
+    }
+    h1{ font-size:15px; margin-bottom:8px; }
+    .header{
+        flex-direction:column;
+        align-items:center;
+    }
+    .left{
+        width:100%;
+        text-align:center;
+        margin-bottom:6px;
+    }
+    img{ width:65px; height:65px; } /* chhota photo */
+    .section-title{ font-size:10px; }
+    .entry, ul{ font-size:10px; }
+    .entry-left, .entry-right{
+        width:100%;
+        text-align:center;
+        margin-top:2px;
+    }
+}
+    </style> -->

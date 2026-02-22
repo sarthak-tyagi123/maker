@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= data.fullName %> - Resume</title>
+
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            background: #eaeaea;
+            padding: 30px;
+        }
+
+        .resume {
+            width: 800px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .left-header {
+            width: 70%;
+        }
+
+        .header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .contact div {
+            margin-bottom: 4px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+            border-bottom: 1px solid black;
+            padding-bottom: 3px;
+        }
+
+        .entry {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .entry-left { width: 70%; }
+        .entry-right { width: 30%; text-align: right; }
+
+        ul { padding-left: 20px; }
+
+        /* Download Button */
+        .download-btn {
+            position: absolute;
+            top: 20px;
+            right: 150px;
+            padding: 8px 14px;
+            background: #00c896;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background: #009e75;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="resume">
+
+    <button class="download-btn" onclick="window.print()">Download</button>
+
+    <div class="header">
+
+        <div class="left-header">
+            <h1><%= data.fullName %></h1>
+
+            <div class="contact">
+                <% if(data.phone){ %>
+                    <div> <%=📞data.phone %></div>
+                <% } %>
+
+                <% if(data.address){ %>
+                    <div> <📍data.address %></div>
+                <% } %>
+
+                <% if(data.email){ %>
+                    <div><%= ✉data.email %></div>
+                <% } %>
+
+                <% if(data.linkedin){ %>
+                    <div><%= 🔗 data.linkedin %></div>
+                <% } %>
+
+                <% if(data.github){ %>
+                    <div>💻 <%= data.github %></div>
+                <% } %>
+
+                
+            </div>
+        </div>
+
+        <% if(data.photo){ %>
+            <img src="<%= data.photo %>">
+        <% } %>
+
+    </div>
+
+    <!-- SUMMARY -->
+    <% if(data.summary){ %>
+        <div class="section-title">Professional Summary</div>
+        <p><%= data.summary %></p>
+    <% } %>
+
+    <!-- SKILLS -->
+    <% if(data.skills){ %>
+        <div class="section-title">Skills</div>
+        <ul>
+            <% data.skills.split(",").forEach(skill => { %>
+                <li><%= skill.trim() %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <!-- EDUCATION -->
+    <% if(data.degree){ %>
+        <div class="section-title">Education</div>
+        <div class="entry">
+            <div class="entry-left">
+                <strong><%= data.degree %></strong><br>
+                <%= data.college %>
+            </div>
+            <div class="entry-right">
+                <%= data.eduYear %>
+            </div>
+        </div>
+    <% } %>
+
+    <!-- EXPERIENCE -->
+    <% if(data.company){ %>
+        <div class="section-title">Experience</div>
+        <div class="entry">
+            <div class="entry-left">
+                <strong><%= data.company %></strong><br>
+                <%= data.position %>
+            </div>
+            <div class="entry-right">
+                <%= data.expYear %>
+            </div>
+        </div>
+        <ul>
+            <li><%= data.jobDesc %></li>
+        </ul>
+    <% } %>
+
+    <!-- PROJECT -->
+    <% if(data.projectTitle){ %>
+        <div class="section-title">Projects</div>
+        <strong><%= data.projectTitle %></strong>
+        <ul>
+            <li><%= data.projectDesc %></li>
+        </ul>
+    <% } %>
+
+    <!-- CERTIFICATE -->
+    <% if(data.certifications){ %>
+        <div class="section-title">Certificates</div>
+        <ul>
+            <li><%= data.certifications %></li>
+        </ul>
+    <% } %>
+
+    <!-- LANGUAGES -->
+    <% if(data.languages){ %>
+        <div class="section-title">Languages</div>
+        <ul>
+            <li><%= data.languages %></li>
+        </ul>
+    <% } %>
+
+</div>
+
+</body>
+</html>

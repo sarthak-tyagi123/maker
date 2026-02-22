@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Resume Builder</title>
+
+<style>
+body{
+    font-family:"Times New Roman", serif;
+    background:#eaeaea;
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    padding:30px;
+}
+
+.container{
+    width:45%;
+    background:white;
+    padding:20px;
+    height:100vh;
+    overflow-y:auto;
+}
+
+.preview{
+    width:45%;
+    background:white;
+    padding:30px;
+    min-height:100vh;
+}
+
+input,textarea{
+    width:100%;
+    margin-top:6px;
+    padding:5px;
+}
+
+button{
+    margin-top:6px;
+    padding:4px 8px;
+    cursor:pointer;
+}
+
+#previewName{
+    text-align:center;
+}
+
+.section{
+    margin-top:20px;
+}
+
+.section-title{
+    font-weight:bold;
+    border-bottom:1px solid black;
+    margin-bottom:5px;
+}
+
+.entry{
+    display:flex;
+    justify-content:space-between;
+}
+
+img{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    object-fit:cover;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Photo</h2>
+<input type="file" id="photoInput">
+
+<h2>Personal Info</h2>
+<input id="fullName" placeholder="Full Name">
+<input id="phone" placeholder="Phone">
+<input id="email" placeholder="Email">
+<input id="linkedin" placeholder="LinkedIn">
+<input id="github" placeholder="GitHub">
+
+<h2>Education</h2>
+<div id="eduBox"></div>
+<button onclick="addEdu()">+ Add</button>
+
+<h2>Skills</h2>
+<div id="skillBox"></div>
+<button onclick="addSkill()">+ Add</button>
+
+<h2>Experience</h2>
+<div id="expBox"></div>
+<button onclick="addExp()">+ Add</button>
+
+<h2>Projects</h2>
+<div id="projectBox"></div>
+<button onclick="addProject()">+ Add</button>
+
+<h2>Internships</h2>
+<div id="internBox"></div>
+<button onclick="addIntern()">+ Add</button>
+
+<h2>Certificates</h2>
+<div id="certBox"></div>
+<button onclick="addCert()">+ Add</button>
+
+<h2>Hobbies</h2>
+<div id="hobbyBox"></div>
+<button onclick="addHobby()">+ Add</button>
+
+<h2>Languages</h2>
+<div id="langBox"></div>
+<button onclick="addLang()">+ Add</button>
+
+</div>
+
+<!-- PREVIEW -->
+
+<div class="preview">
+
+<img id="previewPhoto">
+<h1 id="previewName"></h1>
+
+<p id="previewPhone"></p>
+<p id="previewEmail"></p>
+<p id="previewLinkedin"></p>
+<p id="previewGithub"></p>
+
+<div id="eduSection" class="section" style="display:none;">
+<div class="section-title">Education</div>
+<div id="previewEdu"></div>
+</div>
+
+<div id="skillSection" class="section" style="display:none;">
+<div class="section-title">Skills</div>
+<ul id="previewSkill"></ul>
+</div>
+
+<div id="expSection" class="section" style="display:none;">
+<div class="section-title">Experience</div>
+<div id="previewExp"></div>
+</div>
+
+<div id="projectSection" class="section" style="display:none;">
+<div class="section-title">Projects</div>
+<div id="previewProject"></div>
+</div>
+
+<div id="internSection" class="section" style="display:none;">
+<div class="section-title">Internships</div>
+<div id="previewIntern"></div>
+</div>
+
+<div id="certSection" class="section" style="display:none;">
+<div class="section-title">Certificates</div>
+<div id="previewCert"></div>
+</div>
+
+<div id="hobbySection" class="section" style="display:none;">
+<div class="section-title">Hobbies</div>
+<ul id="previewHobby"></ul>
+</div>
+
+<div id="langSection" class="section" style="display:none;">
+<div class="section-title">Languages</div>
+<ul id="previewLang"></ul>
+</div>
+
+</div>
+
+<script>
+
+/* PERSONAL INFO */
+fullName.oninput = ()=> previewName.innerText = fullName.value
+phone.oninput = ()=> previewPhone.innerText = phone.value
+email.oninput = ()=> previewEmail.innerText = email.value
+linkedin.oninput = ()=> previewLinkedin.innerText = linkedin.value
+github.oninput = ()=> previewGithub.innerText = github.value
+
+photoInput.onchange = e=>{
+    previewPhoto.src = URL.createObjectURL(e.target.files[0])
+}
+
+/* EDUCATION */
+function addEdu(){
+    const div=document.createElement("div")
+    div.innerHTML=`<input placeholder="Degree">
+    <button onclick="this.parentElement.remove(); updateEdu()">X</button>`
+    div.querySelector("input").oninput=updateEdu
+    eduBox.appendChild(div)
+}
+
+function updateEdu(){
+    previewEdu.innerHTML=""
+    eduBox.querySelectorAll("input").forEach(i=>{
+        if(i.value) previewEdu.innerHTML+=`<p>${i.value}</p>`
+    })
+    eduSection.style.display = previewEdu.innerHTML ? "block":"none"
+}
+
+/* SKILL */
+function addSkill(){
+    const div=document.createElement("div")
+    div.innerHTML=`<input placeholder="Skill">
+    <button onclick="this.parentElement.remove(); updateSkill()">X</button>`
+    div.querySelector("input").oninput=updateSkill
+    skillBox.appendChild(div)
+}
+
+function updateSkill(){
+    previewSkill.innerHTML=""
+    skillBox.querySelectorAll("input").forEach(i=>{
+        if(i.value) previewSkill.innerHTML+=`<li>${i.value}</li>`
+    })
+    skillSection.style.display = previewSkill.innerHTML ? "block":"none"
+}
+
+/* EXPERIENCE */
+function addExp(){
+    const div=document.createElement("div")
+    div.innerHTML=`<input placeholder="Company">
+    <button onclick="this.parentElement.remove(); updateExp()">X</button>`
+    div.querySelector("input").oninput=updateExp
+    expBox.appendChild(div)
+}
+
+function updateExp(){
+    previewExp.innerHTML=""
+    expBox.querySelectorAll("input").forEach(i=>{
+        if(i.value) previewExp.innerHTML+=`<p>${i.value}</p>`
+    })
+    expSection.style.display = previewExp.innerHTML ? "block":"none"
+}
+
+/* PROJECT */
+function addProject(){
+    const div=document.createElement("div")
+    div.innerHTML=`<input placeholder="Project">
+    <button onclick="this.parentElement.remove(); updateProject()">X</button>`
+    div.querySelector("input").oninput=updateProject
+    projectBox.appendChild(div)
+}
+
+function updateProject(){
+    previewProject.innerHTML=""
+    projectBox.querySelectorAll("input").forEach(i=>{
+        if(i.value) previewProject.innerHTML+=`<p>${i.value}</p>`
+    })
+    projectSection.style.display = previewProject.innerHTML ? "block":"none"
+}
+
+/* INTERNSHIP */
+function addIntern(){
+    const div=document.createElement("div")
+    div.innerHTML=`<input placeholder="Internship">
+    <button onclick="this.parentElement.remove(); updateIntern()">X</button>`
+    div.querySelector("input").oninput=updateIntern
+    internBox.appendChild(div)
+}
+
+function updateIntern(){
+    previewIntern.innerHTML=""
+    internBox.querySelectorAll("input").forEach(i=>{
+        if(i.value) previewIntern.innerHTML+=`<p>${i.value}</p>`
+    })
+    internSection.style.display = previewIntern.innerHTML ? "block":"none"
+}
+
+/* CERTIFICATE */
+function addCert(){
+    const div=document.createElement("div")
+    div.innerHTML=`<input placeholder="Certificate">
+    <button onclick="this.parentElement.remove(); updateCert()">X</button>`
+    div.querySelector("input").oninput=updateCert
+    certBox.appendChild(div)
+}
+
+function updateCert(){
+    previewCert.innerHTML=""
+    certBox.querySelectorAll("input").forEach(i=>{
+        if(i.value) previewCert.innerHTML+=`<p>${i.value}</p>`
+    })
+    certSection.style.display = previewCert.innerHTML ? "block":"none"
+}
+
+/* HOBBY */
+function addHobby(){
+    const div=document.createElement("div")
+    div.innerHTML=`<input placeholder="Hobby">
+    <button onclick="this.parentElement.remove(); updateHobby()">X</button>`
+    div.querySelector("input").oninput=updateHobby
+    hobbyBox.appendChild(div)
+}
+
+function updateHobby(){
+    previewHobby.innerHTML=""
+    hobbyBox.querySelectorAll("input").forEach(i=>{
+        if(i.value) previewHobby.innerHTML+=`<li>${i.value}</li>`
+    })
+    hobbySection.style.display = previewHobby.innerHTML ? "block":"none"
+}
+
+/* LANGUAGE */
+function addLang(){
+    const div=document.createElement("div")
+    div.innerHTML=`<input placeholder="Language">
+    <button onclick="this.parentElement.remove(); updateLang()">X</button>`
+    div.querySelector("input").oninput=updateLang
+    langBox.appendChild(div)
+}
+
+function updateLang(){
+    previewLang.innerHTML=""
+    langBox.querySelectorAll("input").forEach(i=>{
+        if(i.value) previewLang.innerHTML+=`<li>${i.value}</li>`
+    })
+    langSection.style.display = previewLang.innerHTML ? "block":"none"
+}
+
+</script>
+</body>
+</html>

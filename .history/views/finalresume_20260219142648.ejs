@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= data.fullName %> - Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            background: #f4f6f9;
+            padding: 20px;
+        }
+        .resume {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        /* Top-right circular photo */
+        .resume img.photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: 2px solid #00c896;
+        }
+
+        h1, h2, h3 {
+            margin: 5px 0;
+        }
+        hr {
+            margin: 15px 0;
+        }
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+        /* Download button */
+        .download-btn {
+            position: absolute;
+            top: 20px;
+            right: 140px; /* next to photo */
+            padding: 10px 15px;
+            background: #00c896;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            background: #009e75;
+        }
+    </style>
+</head>
+<body>
+    <div class="resume" id="resumeDiv">
+        <!-- Photo -->
+        <% if(data.photo){ %>
+            <img src="<%= data.photo %>" alt="Profile Photo" class="photo">
+        <% } %>
+
+        <!-- Download Button -->
+        <button class="download-btn" onclick="downloadResume()">Download Resume</button>
+
+        <h1><%= data.fullName %></h1>
+        <h3><%= data.jobTitle %></h3>
+
+        <p>Email: <%= data.email %></p>
+        <p>Phone: <%= data.phone %></p>
+        <p>Address: <%= data.address %></p>
+        <p>LinkedIn: <%= data.linkedin %></p>
+        <p>GitHub: <%= data.github %></p>
+
+        <hr>
+        <h2>Professional Summary</h2>
+        <p><%= data.summary %></p>
+
+        <hr>
+        <h2>Skills</h2>
+        <ul>
+            <% (data.skills || "").split(",").forEach(skill => { %>
+                <li><%= skill.trim() %></li>
+            <% }) %>
+        </ul>
+
+        <hr>
+        <h2>Education</h2>
+        <p><strong><%= data.degree %></strong>, <%= data.college %> - <%= data.eduYear %></p>
+
+        <hr>
+        <h2>Work Experience</h2>
+        <p><strong><%= data.company %></strong></p>
+        <p><%= data.position %> | <%= data.expYear %></p>
+        <p><%= data.jobDesc %></p>
+
+        <hr>
+        <h2>Projects</h2>
+        <p><strong><%= data.projectTitle %></strong></p>
+        <p><%= data.projectDesc %></p>
+
+        <hr>
+        <h2>Certifications</h2>
+        <p><%= data.certifications %></p>
+
+        <hr>
+        <h2>Languages</h2>
+        <p><%= data.languages %></p>
+    </div>
+
+    <script>
+        function downloadResume() {
+            // Open print dialog
+            window.print();
+        }
+    </script>
+</body>
+</html>

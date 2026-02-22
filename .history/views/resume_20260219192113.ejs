@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Resume Builder</title>
+
+<style>
+body {
+    font-family: "Times New Roman", serif;
+    background: #eaeaea;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    gap: 40px;
+}
+
+.container {
+    width: 45%;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 6px 10px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.preview {
+    width: 45%;
+    background: white;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.preview img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    position: absolute;
+    right: 60px;
+    top: 40px;
+    object-fit: cover;
+}
+
+.preview h1 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.contact {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 20px;
+    border-bottom: 1px solid black;
+    padding-bottom: 3px;
+}
+
+ul {
+    margin-top: 5px;
+    padding-left: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Create Resume</h1>
+    <form>
+
+        <h2>Upload Photo</h2>
+        <input type="file" id="photoInput" accept="image/*">
+
+        <h2>Personal Info</h2>
+        <input type="text" id="fullName" placeholder="Full Name">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="phone" placeholder="Phone">
+        <input type="text" id="address" placeholder="Address">
+        <input type="url" id="github" placeholder="GitHub">
+
+        <h2>Skills <button type="button" onclick="addSkill()">+</button></h2>
+        <div id="skillBox"></div>
+
+        <h2>Certificates <button type="button" onclick="addCertificate()">+</button></h2>
+        <div id="certificateBox"></div>
+
+    </form>
+</div>
+
+<div class="preview">
+
+    <img id="photoPreview">
+
+    <h1 id="previewFullName">Your Name</h1>
+
+    <div class="contact">
+        <span id="previewAddress"></span> |
+        <span id="previewPhone"></span> |
+        <span id="previewEmail"></span> |
+        <span id="previewGithub"></span>
+    </div>
+
+    <div class="section-title">Skills</div>
+    <ul id="previewSkills"></ul>
+
+    <div class="section-title">Certificates</div>
+    <ul id="previewCertificates"></ul>
+
+</div>
+
+<script>
+
+/* LINK PERSONAL INFO */
+function linkInput(inputId, previewId){
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    input.addEventListener("input", ()=> preview.innerText = input.value);
+}
+
+linkInput("fullName","previewFullName");
+linkInput("email","previewEmail");
+linkInput("phone","previewPhone");
+linkInput("address","previewAddress");
+linkInput("github","previewGithub");
+
+/* PHOTO */
+document.getElementById("photoInput").addEventListener("change", function(e){
+    const file = e.target.files[0];
+    if(file){
+        document.getElementById("photoPreview").src = URL.createObjectURL(file);
+    }
+});
+
+/* SKILLS */
+function addSkill(){
+skillBox.innerHTML += `
+<div>
+<input type="text" placeholder="Skill">
+<button type="button" onclick="this.parentElement.remove(); renderSkill()">X</button>
+</div>`;
+renderSkill();
+skillBox.querySelectorAll("input").forEach(i=>i.oninput=renderSkill);
+}
+
+function renderSkill(){
+previewSkills.innerHTML="";
+skillBox.querySelectorAll("input").forEach(i=>{
+if(i.value){
+previewSkills.innerHTML += `<li>${i.value}</li>`;
+}
+});
+}
+
+/* CERTIFICATES */
+function addCertificate(){
+certificateBox.innerHTML += `
+<div>
+<input type="text" placeholder="Certificate Name">
+<input type="text" placeholder="Issued By">
+<button type="button" onclick="this.parentElement.remove(); renderCertificate()">X</button>
+</div>`;
+renderCertificate();
+certificateBox.querySelectorAll("input").forEach(i=>i.oninput=renderCertificate);
+}
+
+function renderCertificate(){
+previewCertificates.innerHTML="";
+certificateBox.querySelectorAll("div").forEach(block=>{
+let inputs = block.querySelectorAll("input");
+if(inputs[0].value){
+previewCertificates.innerHTML += `<li><strong>${inputs[0].value}</strong> - ${inputs[1].value}</li>`;
+}
+});
+}
+
+</script>
+
+</body>
+</html>

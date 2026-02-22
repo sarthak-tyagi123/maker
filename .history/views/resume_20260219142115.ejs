@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            width: 1000px;
+        }
+
+        form {
+            width: 45%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .preview {
+            width: 55%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #00c896;
+            color: white;
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #009e75;
+        }
+
+        hr {
+            margin: 15px 0;
+        }
+
+        .preview h1, .preview h3 {
+            margin: 5px 0;
+        }
+
+        .preview ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- FORM -->
+    <form id="resumeForm" oninput="updatePreview()"
+          action="/generate" method="POST">
+        <h1>Create Resume</h1>
+
+        <h2>Personal Info</h2>
+        <input type="text" name="fullName" placeholder="Full Name" required>
+        <input type="text" name="jobTitle" placeholder="Job Title">
+        <input type="email" name="email" placeholder="Email">
+        <input type="text" name="phone" placeholder="Phone">
+        <input type="text" name="address" placeholder="Address">
+        <input type="url" name="linkedin" placeholder="LinkedIn URL">
+        <input type="url" name="github" placeholder="GitHub URL">
+
+        <h2>Summary</h2>
+        <textarea name="summary" placeholder="Professional Summary"></textarea>
+
+        <h2>Skills</h2>
+        <input type="text" name="skills" placeholder="Comma separated">
+
+        <h2>Education</h2>
+        <input type="text" name="degree" placeholder="Degree">
+        <input type="text" name="college" placeholder="College/University">
+        <input type="text" name="eduYear" placeholder="Year">
+
+        <h2>Experience</h2>
+        <input type="text" name="company" placeholder="Company">
+        <input type="text" name="position" placeholder="Position">
+        <input type="text" name="expYear" placeholder="Duration">
+        <textarea name="jobDesc" placeholder="Job Description"></textarea>
+
+        <h2>Projects</h2>
+        <input type="text" name="projectTitle" placeholder="Project Title">
+        <textarea name="projectDesc" placeholder="Project Description"></textarea>
+
+        <h2>Certifications</h2>
+        <input type="text" name="certifications" placeholder="Certification">
+
+        <h2>Languages</h2>
+        <input type="text" name="languages" placeholder="English, Hindi">
+
+        <button type="submit">Generate Final Resume</button>
+    </form>
+
+    <!-- LIVE PREVIEW -->
+    <div class="preview" id="preview">
+        <h1 id="resFullName">Full Name</h1>
+        <h3 id="resJobTitle">Job Title</h3>
+
+        <p>Email: <span id="resEmail">email@example.com</span></p>
+        <p>Phone: <span id="resPhone">1234567890</span></p>
+        <p>Address: <span id="resAddress">Address</span></p>
+        <p>LinkedIn: <span id="resLinkedin">linkedin.com</span></p>
+        <p>GitHub: <span id="resGithub">github.com</span></p>
+
+        <hr>
+
+        <h2>Summary</h2>
+        <p id="resSummary">Professional summary...</p>
+
+        <hr>
+
+        <h2>Skills</h2>
+        <ul id="resSkills"><li>HTML</li><li>CSS</li></ul>
+
+        <hr>
+
+        <h2>Education</h2>
+        <p id="resCollege">Degree, College - Year</p>
+
+        <hr>
+
+        <h2>Experience</h2>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Builder</title>
+
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-family: Arial, sans-serif;
+            background:#ffffff;
+        }
+
+        .container{
+            text-align:center;
+        }
+
+        h1{
+            font-size:28px;
+            font-weight:normal;
+            margin-bottom:30px;
+            color:#333;
+        }
+
+        .btn{
+            padding:10px 22px;
+            border:1px solid #000;
+            background:white;
+            cursor:pointer;
+            font-size:15px;
+            border-radius:4px;
+            transition:0.2s;
+        }
+
+        .btn:hover{
+            background:#000;
+            color:#fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Click To Make Your Resume</h1>
+
+        <form action="/resume" method="g">
+            <button type="submit" class="btn">Start</button>
+        </form>
+
+    </div>
+
+</body>
+</html>

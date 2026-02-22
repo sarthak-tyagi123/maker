@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Builder</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .section { margin-bottom: 20px; }
+        .entry { margin-bottom: 10px; }
+        button { margin-top: 5px; }
+        input, textarea { width: 100%; margin: 5px 0; }
+    </style>
+</head>
+<body>
+
+<h2>Resume Input</h2>
+
+<form method="POST" action="/finalresume">
+
+<!-- PERSONAL INFO -->
+<div class="section">
+    <h3>Personal Info</h3>
+    <input type="text" name="name" placeholder="Full Name">
+    <input type="text" name="location" placeholder="Location">
+    <input type="text" name="phone" placeholder="Phone">
+    <input type="email" name="email" placeholder="Email">
+    <input type="text" name="github" placeholder="GitHub Link">
+</div>
+
+<!-- EDUCATION -->
+<div class="section">
+    <h3>Education <button type="button" onclick="addEducation()">+</button></h3>
+    <div id="educationSection">
+        <div class="entry">
+            <input type="text" name="degree[]" placeholder="Degree">
+            <input type="text" name="college[]" placeholder="College">
+            <input type="text" name="year[]" placeholder="Year">
+            <input type="text" name="cgpa[]" placeholder="CGPA">
+        </div>
+    </div>
+</div>
+
+<!-- TECHNICAL SKILLS -->
+<div class="section">
+    <h3>Technical Skills</h3>
+    <textarea name="skills" placeholder="HTML, CSS, JS, Node, MongoDB..."></textarea>
+</div>
+
+<!-- INTERNSHIPS -->
+<div class="section">
+    <h3>Internships <button type="button" onclick="addInternship()">+</button></h3>
+    <div id="internshipSection">
+        <div class="entry">
+            <input type="text" name="internCompany[]" placeholder="Company">
+            <input type="text" name="internDuration[]" placeholder="Duration">
+            <textarea name="internDesc[]" placeholder="Description"></textarea>
+        </div>
+    </div>
+</div>
+
+<!-- CERTIFICATES -->
+<div class="section">
+    <h3>Certificates <button type="button" onclick="addCertificate()">+</button></h3>
+    <div id="certificateSection">
+        <div class="entry">
+            <input type="text" name="certName[]" placeholder="Certificate Name">
+            <input type="text" name="certOrg[]" placeholder="Organization">
+            <textarea name="certDesc[]" placeholder="Description"></textarea>
+        </div>
+    </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="section">
+    <h3>Projects <button type="button" onclick="addProject()">+</button></h3>
+    <div id="projectSection">
+        <div class="entry">
+            <input type="text" name="projectTitle[]" placeholder="Project Title">
+            <input type="text" name="projectTech[]" placeholder="Tech Used">
+            <textarea name="projectDesc[]" placeholder="Description"></textarea>
+        </div>
+    </div>
+</div>
+
+<!-- EXTRACURRICULAR -->
+<div class="section">
+    <h3>Extracurricular</h3>
+    <textarea name="extra"></textarea>
+</div>
+
+<!-- LANGUAGES -->
+<div class="section">
+    <h3>Languages</h3>
+    <input type="text" name="languages" placeholder="Hindi, English">
+</div>
+
+<!-- INTERESTS -->
+<div class="section">
+    <h3>Interests</h3>
+    <input type="text" name="interests" placeholder="Listening Songs, Problem Solving">
+</div>
+
+<button type="submit">Generate Resume</button>
+
+</form>
+
+<script>
+function addEducation() {
+    document.getElementById("educationSection").innerHTML += `
+        <div class="entry">
+            <input type="text" name="degree[]" placeholder="Degree">
+            <input type="text" name="college[]" placeholder="College">
+            <input type="text" name="year[]" placeholder="Year">
+            <input type="text" name="cgpa[]" placeholder="CGPA">
+        </div>`;
+}
+
+function addInternship() {
+    document.getElementById("internshipSection").innerHTML += `
+        <div class="entry">
+            <input type="text" name="internCompany[]" placeholder="Company">
+            <input type="text" name="internDuration[]" placeholder="Duration">
+            <textarea name="internDesc[]" placeholder="Description"></textarea>
+        </div>`;
+}
+
+function addCertificate() {
+    document.getElementById("certificateSection").innerHTML += `
+        <div class="entry">
+            <input type="text" name="certName[]" placeholder="Certificate Name">
+            <input type="text" name="certOrg[]" placeholder="Organization">
+            <textarea name="certDesc[]" placeholder="Description"></textarea>
+        </div>`;
+}
+
+function addProject() {
+    document.getElementById("projectSection").innerHTML += `
+        <div class="entry">
+            <input type="text" name="projectTitle[]" placeholder="Project Title">
+            <input type="text" name="projectTech[]" placeholder="Tech Used">
+            <textarea name="projectDesc[]" placeholder="Description"></textarea>
+        </div>`;
+}
+</script>
+
+</body>
+</html>

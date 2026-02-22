@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-family: Arial, sans-serif;
+            background:#ffffff;
+        }
+
+        .container{
+            text-align:center;
+        }
+
+        h1{
+            font-size:28px;
+            font-weight:normal;
+            margin-bottom:30px;
+            color:#333;
+        }
+
+        .btn{
+            padding:10px 22px;
+            border:1px solid #000;
+            background:white;
+            cursor:pointer;
+            font-size:15px;
+            border-radius:4px;
+            transition:0.2s;
+        }
+
+        .btn:hover{
+            background:#000;
+            color:#fff;
+        }
+
+        
+/* Tablet: 481px - 1024px */
+@media (min-width: 481px) and (max-width: 1024px){
+    .resume {
+        width:90%;
+        padding:30px;
+        margin:0 auto;  /* ensure centered */
+    }
+
+    h1 { font-size:24px; margin-bottom:15px; }
+
+    .left { width:65%; }
+
+    img { width:90px; height:90px; }
+}
+
+/* Mobile: max-width 480px */
+@media (max-width:480px){
+    body {
+        padding:10px 0;
+    }
+
+    .resume {
+        width:95%;        /* almost full screen */
+        padding:20px;
+        margin:0 auto;    /* center */
+    }
+
+    h1 { font-size:20px; margin-bottom:12px; }
+
+    .header {
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .left {
+        width:100%;
+        text-align:center;
+    }
+
+    .entry-left, .entry-right {
+        width:100%;
+        text-align:center;
+    }
+
+    img { width:80px; height:80px; margin:10px 0; }
+
+    .section-title {
+        font-size:16px;
+    }
+
+    ul { padding-left:15px; }
+    
+    .download-btn{
+        right:15px;
+        top:15px;
+        padding:8px 14px;
+        font-size:14px;
+    }
+}
+
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Click To Make Your Resume</h1>
+
+        <form action="/resume" method="GET">
+            <button type="submit" class="btn">Start</button>
+        </form>
+
+    </div>
+
+</body>
+</html>

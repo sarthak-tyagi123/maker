@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= data.fullName %> - Resume</title>
+
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            background: #eaeaea;
+            padding: 30px;
+        }
+
+        .resume {
+            width: 800px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .left-header { width: 70%; }
+
+        .header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        h1 { text-align: center; margin-bottom: 10px; }
+
+        .contact div { margin-bottom: 4px; }
+
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+            border-bottom: 1px solid black;
+            padding-bottom: 3px;
+        }
+
+        .entry {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .entry-left { width: 70%; }
+        .entry-right { width: 30%; text-align: right; }
+
+        ul { padding-left: 20px; }
+
+        .download-btn {
+            position: absolute;
+            top: 20px;
+            right: 150px;
+            padding: 8px 14px;
+            background: #00c896;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .download-btn:hover { background: #009e75; }
+    </style>
+</head>
+
+<body>
+
+<div class="resume">
+
+<button class="download-btn" onclick="window.print()">Download</button>
+
+<div class="header">
+
+<div class="left-header">
+<h1><%= data.fullName %></h1>
+
+<div class="contact">
+<% if(data.phone){ %><div>📞 <%= data.phone %></div><% } %>
+<% if(data.address){ %><div>📍 <%= data.address %></div><% } %>
+<% if(data.email){ %><div>✉ <%= data.email %></div><% } %>
+<% if(data.linkedin){ %><div>🔗 <%= data.linkedin %></div><% } %>
+<% if(data.github){ %><div>💻 <%= data.github %></div><% } %>
+</div>
+</div>
+
+<% if(data.photo){ %>
+<img src="<%= data.photo %>">
+<% } %>
+
+</div>
+
+<!-- SKILLS -->
+<% if(data.skills && data.skills.length){ %>
+<div class="section-title">Skills</div>
+<ul>
+<% data.skills.forEach(skill => { %>
+<li><%= skill %></li>
+<% }) %>
+</ul>
+<% } %>
+
+<!-- EDUCATION -->
+<% if(data.degree && data.degree.length){ %>
+<div class="section-title">Education</div>
+<% for(let i=0;i<data.degree.length;i++){ %>
+<div class="entry">
+<div class="entry-left">
+<strong><%= data.degree[i] %></strong><br>
+<%= data.college[i] %>
+</div>
+<div class="entry-right">
+<%= data.year[i] %> 
+<%= data.cgpa && data.cgpa[i] ? " | " + data.cgpa[i] : "" %>
+</div>
+</div>
+<% } %>
+<% } %>
+
+<!-- EXPERIENCE -->
+<% if(data.company && data.company.length){ %>
+<div class="section-title">Experience</div>
+<% for(let i=0;i<data.company.length;i++){ %>
+<div class="entry">
+<div class="entry-left">
+<strong><%= data.company[i] %></strong><br>
+<%= data.position[i] %>
+</div>
+<div class="entry-right">
+<%= data.experienceYear[i] %>
+</div>
+</div>
+<ul>
+<li><%= data.experienceDesc[i] %></li>
+</ul>
+<% } %>
+<% } %>
+
+<!-- PROJECT -->
+<% if(data.projectTitle && data.projectTitle.length){ %>
+<div class="section-title">Projects</div>
+<% for(let i=0;i<data.projectTitle.length;i++){ %>
+<strong><%= data.projectTitle[i] %></strong>
+<ul>
+<li><%= data.projectDesc[i] %></li>
+</ul>
+<% } %>
+<% } %>
+
+<!-- CERTIFICATE -->
+<% if(data.certificateTitle && data.certificateTitle.length){ %>
+<div class="section-title">Certificates</div>
+<ul>
+<% for(let i=0;i<data.certificateTitle.length;i++){ %>
+<li>
+<strong><%= data.certificateTitle[i] %></strong> - 
+<%= data.certificateOrg[i] %>
+</li>
+<% } %>
+</ul>
+<% } %>
+
+<!-- LANGUAGES -->
+<% if(data.languages && data.languages.length){ %>
+<div class="section-title">Languages</div>
+<ul>
+<% data.languages.forEach(lang => { %>
+<li><%= lang %></li>
+<% }) %>
+</ul>
+<% } %>
+
+</div>
+
+</body>
+</html>

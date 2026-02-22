@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Created Task</title>
+    <style>
+        .task_button {
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .tasks {
+            width: 250px;
+            border: 2px solid black;
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            justify-content: space-between; /* Space out content */
+            padding: 10px;
+            min-height: 150px; /* Ensure enough height */
+        }
+
+        .task {
+            flex-grow: 1; /* Push buttons to bottom */
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: auto; /* Push to the bottom */
+            padding: 10px 0;
+        }
+
+        .buttons button {
+            background-color: blueviolet;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Here all tasks are created</h2>
+    <br><br>
+
+    <button class="task_button">Click here to show tasks</button>
+    <br><br>
+
+    <div class="tasks">
+        <div class="task">
+            <h3><%= filename %></h3>
+            <p><%= content %></p>
+        </div>
+
+        <div class="buttons">
+            <span>Task Name</span>
+            <button>➜</button>
+            <button>✎</button>
+            <button>🗑️</button>
+        </div>
+    </div>
+
+</body>
+</html>

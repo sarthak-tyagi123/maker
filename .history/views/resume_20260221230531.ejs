@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Resume Builder</title>
+
+<style>
+body {
+    font-family: "Times New Roman", serif;
+    background: #eaeaea;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 30px;
+    gap: 40px;
+}
+
+/* FORM */
+.container {
+    width: 45%;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    
+    overflow-y: auto;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 6px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.add-btn {
+    margin-top: 8px;
+    padding: 4px 10px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background-color: #40dfaf ;
+}
+
+.remove-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 3px 8px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+/* PREVIEW */
+.preview {
+    width: 45%;
+    background: white;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+#previewName{
+    
+    text-align: center;
+    
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.left-header{
+    width:70%;
+}
+
+#previewName{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header img{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.contact div{
+    margin-bottom:4px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 20px;
+    border-bottom: 1px solid black;
+    padding-bottom: 3px;
+}
+
+.entry {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.entry-left { width: 70%; }
+.entry-right { width: 30%; text-align: right; }
+
+ul { padding-left:20px; }
+</style>
+</head>
+
+<body>
+
+<form class="container" action="/generate" method="POST" enctype="multipart/form-data">
+<h1 style="text-align: center;">Create Resume</h1>
+
+<h2>Upload Profile </h2>
+<input type="file" id="photoInput">
+
+<h2>Personal Info</h2>
+<input type="text" id="fullName" placeholder="Full Name" maxlength="20" required>
+<input type="tel" id="phone" placeholder="Phone" maxlength="10" required>
+<input type="email" id="email" placeholder="Email" maxlength="35" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"  required>
+<input type="url" id="linkedin" placeholder="LinkedIn Profile" maxlength="50" pattern="https://.*" required>
+<input type="url" id="github" placeholder="GitHub Profile" maxlength="50" pattern="https://.*"  required>
+<input type="text" id="address" placeholder="Address" maxlength="50" required>
+
+
+
+<!-- EDUCATION -->
+<h2>Education</h2>
+<div id="educationContainer"></div>
+<button type="button" class="add-btn" onclick="addEducation()">+ Add Education</button>
+
+<!-- SKILLS -->
+<h2>Skills</h2>
+<div id="skillsContainer"></div>
+<button type="button" class="add-btn" onclick="addSkill()">+ Add Skill</button>
+
+<!-- EXPERIENCE -->
+<h2>Experience</h2>
+<div id="experienceContainer"></div>
+<button type="button"class="add-btn" onclick="addExperience()">+ Add Experience</button>
+
+<!-- PROJECTS -->
+<h2>Projects</h2>
+<div id="projectContainer"></div>
+<button type="button" class="add-btn" onclick="addProject()">+ Add Project</button>
+
+<!-- INTERNSHIP -->
+<h2>Internships</h2>
+<div id="internshipContainer"></div>
+<button type="button" class="add-btn" onclick="addInternship()">+ Add Internship</button>
+
+<!-- CERTIFICATE -->
+<h2>Certificates</h2>
+<div id="certificateContainer"></div>
+<button type="button" class="add-btn" onclick="addCertificate()">+ Add Certificate</button>
+
+<!-- HOBBIES -->
+<h2>Hobbies</h2>
+<div id="hobbyContainer"></div>
+<button type="button" class="add-btn" onclick="addHobby()">+ Add Hobby</button>
+
+<!-- LANGUAGES -->
+<h2>Preferred Languages</h2>
+<div id="languageContainer"></div>
+<button type="button" class="add-btn" onclick="addLanguage()">+ Add Language</button>
+
+<br><br>
+
+<button type="submit" style="
+background:#06c8d2dd;
+color:white;
+padding:12px;
+border:none;
+border-radius:6px;
+width:100%;
+font-size:16px;
+cursor:pointer;
+">
+Generate Resume
+</button>
+
+</form>
+
+<!-- PREVIEW -->
+<div class="preview">
+
+<div class="header">
+  <div class="left-header">
+   
+    <div class="contact">
+      <div> <span id="previewPhone"></span></div>
+      <div><span id="previewEmail"></span></div>
+      <div> <span id="previewLinkedin"></span></div>
+      <div> <span id="previewGithub"></span></div>
+      <div> <span id="previewAddress"></span></div>
+    </div>
+  </div>
+  <img id="photoPreview">
+</div>
+
+<div id="educationSection" style="display:none;">
+  <div class="section-title">Education</div>
+  <div id="previewEducation"></div>
+</div>
+
+<div id="skillsSection" style="display:none;">
+  <div class="section-title">Skills</div>
+  <ul id="previewSkills"></ul>
+</div>
+
+<div id="experienceSection" style="display:none;">
+  <div class="section-title">Experience</div>
+  <div id="previewExperience"></div>
+</div>
+
+<div id="projectSection" style="display:none;">
+  <div class="section-title">Projects</div>
+  <div id="previewProjects"></div>
+</div>
+
+<div id="internshipSection" style="display:none;">
+  <div class="section-title">Internships</div>
+  <div id="previewInternships"></div>
+</div>
+
+<div id="certificateSection" style="display:none;">
+  <div class="section-title">Certificates</div>
+  <ul id="previewCertificates"></ul>
+</div>
+
+<div id="hobbySection" style="display:none;">
+  <div class="section-title">Hobbies</div>
+  <ul id="previewHobbies"></ul>
+</div>
+
+
+<div id="languageSection" style="display:none;">
+  <div class="section-title">Preferred Languages</div>
+  <ul id="previewLanguages"></ul>
+</div>
+
+</div>
+
+<script>
+
+/* PERSONAL INFO */
+function link(id, previewId){
+document.getElementById(id).addEventListener("input", function(){
+document.getElementById(previewId).innerText = this.value;
+});
+}
+
+link("fullName","previewName");
+link("phone","previewPhone");
+link("email","previewEmail");
+link("linkedin","previewLinkedin");
+link("github","previewGithub");
+link("address","previewAddress");
+
+photoInput.onchange = function(e){
+photoPreview.src = URL.createObjectURL(e.target.files[0]);
+};
+
+/* EDUCATION */
+function addEducation(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input placeholder="Degree">
+<input placeholder="College">
+<input placeholder="Year">
+<input placeholder="percentage/CGPA">
+<button class="remove-btn" onclick="this.parentElement.remove(); updateEducation()">X</button>
+`;
+educationContainer.appendChild(div);
+div.querySelectorAll("input").forEach(i=>i.oninput=updateEducation);
+}
+
+
+function updateEducation() {
+  previewEducation.innerHTML = "";
+
+  educationContainer.querySelectorAll("div").forEach(d => {
+    const i = d.querySelectorAll("input");
+
+    if (i[0].value) {
+      previewEducation.innerHTML += `
+        <div class="entry">
+          <div class="entry-left">
+            <strong>${i[0].value}</strong><br>
+            ${i[1].value}
+          </div>
+          <div class="entry-right">
+            ${i[2].value} ${i[3].value ? ' | ' + i[3].value : ''}
+          </div>
+        </div>
+      `;
+    }
+  });
+
+  educationSection.style.display =
+    previewEducation.innerHTML === "" ? "none" : "block";
+}
+
+/* SKILLS */
+function addSkill(){
+const div=document.createElement("div");
+div.innerHTML=`<input placeholder="Skill" oninput="updateSkill()">
+<button class="remove-btn" onclick="this.parentElement.remove(); updateSkill()">X</button>`;
+skillsContainer.appendChild(div);
+}
+
+
+function updateSkill(){
+previewSkills.innerHTML="";
+
+skillsContainer.querySelectorAll("input").forEach(i=>{
+if(i.value) previewSkills.innerHTML+=`<li>${i.value}</li>`;
+});
+
+skillsSection.style.display =
+previewSkills.innerHTML === "" ? "none" : "block";
+}
+
+/* EXPERIENCE */
+function addExperience(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input placeholder="Company">
+<input placeholder="Position">
+<input placeholder="Year">
+<textarea placeholder="Description"></textarea>
+<button class="remove-btn" onclick="this.parentElement.remove(); updateExperience()">X</button>`;
+experienceContainer.appendChild(div);
+div.querySelectorAll("input,textarea").forEach(i=>i.oninput=updateExperience);
+}
+
+function updateExperience(){
+
+  previewExperience.innerHTML = "";
+
+  experienceContainer.querySelectorAll("div").forEach(d=>{
+
+    const i = d.querySelectorAll("input,textarea");
+
+    // agar company filled hai tabhi show kare
+    if(i[0].value){
+
+      previewExperience.innerHTML += `
+      <div class="entry">
+        <div class="entry-left">
+          <strong>${i[0].value}</strong><br>
+          ${i[1].value}
+        </div>
+        <div class="entry-right">
+          ${i[2].value}
+        </div>
+      </div>
+      <ul>
+        <li>${i[3].value}</li>
+      </ul>`;
+    }
+
+  });
+
+  // 🔥 hide / show logic
+  if(previewExperience.innerHTML === ""){
+    experienceSection.style.display = "none";
+  } else {
+    experienceSection.style.display = "block";
+  }
+
+}
+
+/* PROJECT */
+function addProject(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input placeholder="Project Title">
+<textarea placeholder="Description"></textarea>
+<button class="remove-btn" onclick="this.parentElement.remove(); updateProject()">X</button>`;
+projectContainer.appendChild(div);
+div.querySelectorAll("input,textarea").forEach(i=>i.oninput=updateProject);
+}
+
+function updateProject(){
+previewProjects.innerHTML="";
+
+projectContainer.querySelectorAll("div").forEach(d=>{
+const i=d.querySelectorAll("input,textarea");
+
+if(i[0].value){
+previewProjects.innerHTML+=`
+<div><strong>${i[0].value}</strong></div>
+<ul><li>${i[1].value}</li></ul>`;
+}
+});
+
+projectSection.style.display =
+previewProjects.innerHTML === "" ? "none" : "block";
+}
+
+/* INTERNSHIP */
+function addInternship(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input placeholder="Company Name" oninput="updateInternship()">
+<input placeholder="Role" oninput="updateInternship()">
+<input placeholder="Duration" oninput="updateInternship()">
+<textarea placeholder="Description" oninput="updateInternship()"></textarea>
+<button class="remove-btn" onclick="this.parentElement.remove(); updateInternship()">X</button>`;
+internshipContainer.appendChild(div);
+}
+function updateInternship(){
+previewInternships.innerHTML="";
+internshipContainer.querySelectorAll("div").forEach(d=>{
+const i=d.querySelectorAll("input,textarea");
+if(i[0].value){
+previewInternships.innerHTML+=`
+<div class="entry">
+<div class="entry-left"><strong>${i[0].value}</strong><br>${i[1].value}</div>
+<div class="entry-right">${i[2].value}</div>
+</div>
+<ul><li>${i[3].value}</li></ul>`;
+}
+});
+
+internshipSection.style.display =
+previewInternships.innerHTML === "" ? "none" : "block";
+}
+
+/* CERTIFICATE */
+function addCertificate(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input placeholder="Certificate Title">
+<input placeholder="Organization & Date">
+<textarea placeholder="Description"></textarea>
+<button class="remove-btn" onclick="this.parentElement.remove(); updateCertificate()">X</button>`;
+certificateContainer.appendChild(div);
+div.querySelectorAll("input,textarea").forEach(i=>i.oninput=updateCertificate);
+}
+
+
+function updateCertificate(){
+previewCertificates.innerHTML="";
+
+certificateContainer.querySelectorAll("div").forEach(d=>{
+const i=d.querySelectorAll("input,textarea");
+
+if(i[0].value){
+previewCertificates.innerHTML+=`
+<div><strong>${i[0].value}</strong><br>${i[1].value}</div>
+<ul><li>${i[2].value}</li></ul>`;
+}
+});
+
+certificateSection.style.display =
+previewCertificates.innerHTML === "" ? "none" : "block";
+}
+
+/* HOBBY */
+function addHobby(){
+const div=document.createElement("div");
+div.innerHTML=`<input placeholder="Hobby" oninput="updateHobby()">
+<button class="remove-btn" onclick="this.parentElement.remove(); updateHobby()">X</button>`;
+hobbyContainer.appendChild(div);
+}
+
+
+function updateHobby(){
+previewHobbies.innerHTML="";
+
+hobbyContainer.querySelectorAll("input").forEach(i=>{
+if(i.value) previewHobbies.innerHTML+=`<li>${i.value}</li>`;
+});
+
+hobbySection.style.display =
+previewHobbies.innerHTML === "" ? "none" : "block";
+}
+
+/* LANGUAGE */
+function addLanguage(){
+const div=document.createElement("div");
+div.innerHTML=`<input placeholder="Language" oninput="updateLanguage()">
+<button class="remove-btn" onclick="this.parentElement.remove(); updateLanguage()">X</button>`;
+languageContainer.appendChild(div);
+}
+
+
+function updateLanguage(){
+previewLanguages.innerHTML="";
+
+languageContainer.querySelectorAll("input").forEach(i=>{
+if(i.value) previewLanguages.innerHTML+=`<li>${i.value}</li>`;
+});
+
+languageSection.style.display =
+previewLanguages.innerHTML === "" ? "none" : "block";
+}
+</script>
+</body>
+</html>

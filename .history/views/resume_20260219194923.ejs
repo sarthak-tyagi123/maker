@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Resume Builder</title>
+
+<style>
+body {
+    font-family: "Times New Roman", serif;
+    background: #eaeaea;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    gap: 40px;
+}
+
+.container {
+    width: 45%;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+}
+
+.preview {
+    width: 45%;
+    background: white;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 6px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    margin-top: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.add-btn {
+    background: black;
+    color: white;
+}
+
+.remove-btn {
+    background: red;
+    color: white;
+    margin-left: 5px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 20px;
+    border-bottom: 1px solid black;
+}
+
+.entry {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+ul { padding-left: 20px; }
+
+.preview img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    object-fit: cover;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Photo</h2>
+<input type="file" id="photoInput">
+
+<h2>Personal Info</h2>
+<input id="fullName" placeholder="Full Name">
+<input id="email" placeholder="Email">
+<input id="phone" placeholder="Phone">
+<input id="address" placeholder="Address">
+
+<h2>Education</h2>
+<div id="educationContainer"></div>
+<button class="add-btn" onclick="addEducation()">+ Add Education</button>
+
+<h2>Skills</h2>
+<div id="skillsContainer"></div>
+<button class="add-btn" onclick="addSkill()">+ Add Skill</button>
+
+<h2>Experience</h2>
+<div id="experienceContainer"></div>
+<button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+
+<h2>Projects</h2>
+<div id="projectContainer"></div>
+<button class="add-btn" onclick="addProject()">+ Add Project</button>
+
+<h2>Certificates</h2>
+<div id="certificateContainer"></div>
+<button class="add-btn" onclick="addCertificate()">+ Add Certificate</button>
+
+</div>
+
+
+<div class="preview">
+
+<img id="photoPreview">
+
+<h1 id="previewFullName">Your Name</h1>
+<p id="previewEmail"></p>
+<p id="previewPhone"></p>
+<p id="previewAddress"></p>
+
+<div class="section-title">Education</div>
+<div id="previewEducation"></div>
+
+<div class="section-title">Skills</div>
+<ul id="previewSkills"></ul>
+
+<div class="section-title">Experience</div>
+<div id="previewExperience"></div>
+
+<div class="section-title">Projects</div>
+<div id="previewProjects"></div>
+
+<div class="section-title">Certificates</div>
+<ul id="previewCertificates"></ul>
+
+</div>
+
+
+<script>
+
+/* BASIC INFO */
+["fullName","email","phone","address"].forEach(id=>{
+document.getElementById(id).oninput=()=>{
+document.getElementById("preview"+id.charAt(0).toUpperCase()+id.slice(1)).innerText=document.getElementById(id).value;
+}
+});
+
+/* PHOTO */
+photoInput.onchange=e=>{
+photoPreview.src=URL.createObjectURL(e.target.files[0]);
+};
+
+/* EDUCATION */
+function addEducation(){
+educationContainer.innerHTML+=`
+<div>
+<input placeholder="Degree">
+<input placeholder="College">
+<input placeholder="Year">
+<button class="remove-btn" onclick="this.parentElement.remove();updateEducation()">X</button>
+</div>`;
+educationContainer.querySelectorAll("input").forEach(i=>i.oninput=updateEducation);
+}
+
+function updateEducation(){
+previewEducation.innerHTML="";
+educationContainer.querySelectorAll("div").forEach(d=>{
+let i=d.querySelectorAll("input");
+if(i[0].value){
+previewEducation.innerHTML+=`
+<div class="entry">
+<div>${i[0].value}<br>${i[1].value}</div>
+<div>${i[2].value}</div>
+</div>`;
+}
+});
+}
+
+/* SKILL */
+function addSkill(){
+skillsContainer.innerHTML+=`
+<div>
+<input placeholder="Skill">
+<button class="remove-btn" onclick="this.parentElement.remove();updateSkill()">X</button>
+</div>`;
+skillsContainer.querySelectorAll("input").forEach(i=>i.oninput=updateSkill);
+}
+
+function updateSkill(){
+previewSkills.innerHTML="";
+skillsContainer.querySelectorAll("input").forEach(i=>{
+if(i.value) previewSkills.innerHTML+=`<li>${i.value}</li>`;
+});
+}
+
+/* EXPERIENCE */
+function addExperience(){
+experienceContainer.innerHTML+=`
+<div>
+<input placeholder="Company">
+<input placeholder="Role">
+<input placeholder="Duration">
+<textarea placeholder="Description"></textarea>
+<button class="remove-btn" onclick="this.parentElement.remove();updateExperience()">X</button>
+</div>`;
+experienceContainer.querySelectorAll("input,textarea").forEach(i=>i.oninput=updateExperience);
+}
+
+function updateExperience(){
+previewExperience.innerHTML="";
+experienceContainer.querySelectorAll("div").forEach(d=>{
+let i=d.querySelectorAll("input,textarea");
+if(i[0].value){
+previewExperience.innerHTML+=`
+<div class="entry">
+<div>${i[0].value}<br>${i[1].value}<br>${i[3].value}</div>
+<div>${i[2].value}</div>
+</div>`;
+}
+});
+}
+
+/* PROJECT */
+function addProject(){
+projectContainer.innerHTML+=`
+<div>
+<input placeholder="Project Title">
+<textarea placeholder="Description"></textarea>
+<button class="remove-btn" onclick="this.parentElement.remove();updateProject()">X</button>
+</div>`;
+projectContainer.querySelectorAll("input,textarea").forEach(i=>i.oninput=updateProject);
+}
+
+function updateProject(){
+previewProjects.innerHTML="";
+projectContainer.querySelectorAll("div").forEach(d=>{
+let i=d.querySelectorAll("input,textarea");
+if(i[0].value){
+previewProjects.innerHTML+=`
+<div><strong>${i[0].value}</strong><br>${i[1].value}</div>`;
+}
+});
+}
+
+/* CERTIFICATE */
+function addCertificate(){
+certificateContainer.innerHTML+=`
+<div>
+<input placeholder="Certificate Name">
+<input placeholder="Issued By">
+<button class="remove-btn" onclick="this.parentElement.remove();updateCertificate()">X</button>
+</div>`;
+certificateContainer.querySelectorAll("input").forEach(i=>i.oninput=updateCertificate);
+}
+
+function updateCertificate(){
+previewCertificates.innerHTML="";
+certificateContainer.querySelectorAll("div").forEach(d=>{
+let i=d.querySelectorAll("input");
+if(i[0].value){
+previewCertificates.innerHTML+=`<li>${i[0].value} - ${i[1].value}</li>`;
+}
+});
+}
+
+</script>
+
+</body>
+</html>

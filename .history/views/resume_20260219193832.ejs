@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Resume Builder</title>
+
+<style>
+body{
+    font-family: Arial;
+    display:flex;
+    gap:40px;
+    padding:30px;
+    background:#eee;
+}
+
+/* FORM */
+.container{
+    width:45%;
+    background:white;
+    padding:20px;
+}
+
+input, textarea{
+    width:100%;
+    margin-top:6px;
+    padding:6px;
+}
+
+button{
+    margin-top:10px;
+    padding:5px 10px;
+    cursor:pointer;
+}
+
+/* PREVIEW */
+.preview{
+    width:45%;
+    background:white;
+    padding:20px;
+}
+
+.section{
+    margin-top:15px;
+    border-top:1px solid black;
+    padding-top:5px;
+}
+
+img{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+}
+</style>
+</head>
+<body>
+
+<!-- FORM -->
+<div class="container">
+
+<h2>Photo</h2>
+<input type="file" id="photoInput">
+
+<h2>Personal Info</h2>
+<input id="name" placeholder="Name">
+<input id="email" placeholder="Email">
+<input id="phone" placeholder="Phone">
+
+<!-- EDUCATION -->
+<h2>Education</h2>
+<div id="eduBox"></div>
+<button onclick="addEdu()">+ Add Education</button>
+
+<!-- SKILLS -->
+<h2>Skills</h2>
+<div id="skillBox"></div>
+<button onclick="addSkill()">+ Add Skill</button>
+
+<!-- EXPERIENCE -->
+<h2>Experience</h2>
+<div id="expBox"></div>
+<button onclick="addExp()">+ Add Experience</button>
+
+<!-- PROJECT -->
+<h2>Projects</h2>
+<div id="projectBox"></div>
+<button onclick="addProject()">+ Add Project</button>
+
+<!-- CERTIFICATE -->
+<h2>Certificates</h2>
+<div id="certBox"></div>
+<button onclick="addCert()">+ Add Certificate</button>
+
+</div>
+
+
+<!-- PREVIEW -->
+<div class="preview">
+
+<img id="previewPhoto">
+
+<h2 id="previewName">Your Name</h2>
+<p id="previewEmail"></p>
+<p id="previewPhone"></p>
+
+<div class="section">
+<h3>Education</h3>
+<div id="previewEdu"></div>
+</div>
+
+<div class="section">
+<h3>Skills</h3>
+<ul id="previewSkill"></ul>
+</div>
+
+<div class="section">
+<h3>Experience</h3>
+<div id="previewExp"></div>
+</div>
+
+<div class="section">
+<h3>Projects</h3>
+<div id="previewProject"></div>
+</div>
+
+<div class="section">
+<h3>Certificates</h3>
+<ul id="previewCert"></ul>
+</div>
+
+</div>
+
+
+<script>
+
+/* PERSONAL INFO */
+name.oninput = ()=> previewName.innerText = name.value
+email.oninput = ()=> previewEmail.innerText = email.value
+phone.oninput = ()=> previewPhone.innerText = phone.value
+
+photoInput.onchange = function(e){
+    const file = e.target.files[0]
+    if(file){
+        previewPhoto.src = URL.createObjectURL(file)
+    }
+}
+
+/* EDUCATION */
+function addEdu(){
+    const div = document.createElement("div")
+
+    div.innerHTML = `
+    <input placeholder="Degree">
+    <input placeholder="College">
+    <input placeholder="Year">
+    <button onclick="this.parentElement.remove(); updateEdu()">X</button>
+    `
+
+    div.querySelectorAll("input").forEach(input=>{
+        input.oninput = updateEdu
+    })
+
+    eduBox.appendChild(div)
+}
+
+function updateEdu(){
+    previewEdu.innerHTML = ""
+    eduBox.querySelectorAll("div").forEach(d=>{
+        const i = d.querySelectorAll("input")
+        if(i[0].value)
+        previewEdu.innerHTML += "<p><b>"+i[0].value+"</b> - "+i[1].value+" ("+i[2].value+")</p>"
+    })
+}
+
+/* SKILL */
+function addSkill(){
+    const div = document.createElement("div")
+
+    div.innerHTML = `
+    <input placeholder="Skill">
+    <button onclick="this.parentElement.remove(); updateSkill()">X</button>
+    `
+
+    div.querySelector("input").oninput = updateSkill
+
+    skillBox.appendChild(div)
+}
+
+function updateSkill(){
+    previewSkill.innerHTML=""
+    skillBox.querySelectorAll("input").forEach(i=>{
+        if(i.value)
+        previewSkill.innerHTML += "<li>"+i.value+"</li>"
+    })
+}
+
+/* EXPERIENCE */
+function addExp(){
+    const div = document.createElement("div")
+
+    div.innerHTML = `
+    <input placeholder="Company">
+    <input placeholder="Role">
+    <button onclick="this.parentElement.remove(); updateExp()">X</button>
+    `
+
+    div.querySelectorAll("input").forEach(i=>{
+        i.oninput = updateExp
+    })
+
+    expBox.appendChild(div)
+}
+
+function updateExp(){
+    previewExp.innerHTML=""
+    expBox.querySelectorAll("div").forEach(d=>{
+        const i = d.querySelectorAll("input")
+        if(i[0].value)
+        previewExp.innerHTML += "<p><b>"+i[0].value+"</b> - "+i[1].value+"</p>"
+    })
+}
+
+/* PROJECT */
+function addProject(){
+    const div = document.createElement("div")
+
+    div.innerHTML = `
+    <input placeholder="Project Title">
+    <button onclick="this.parentElement.remove(); updateProject()">X</button>
+    `
+
+    div.querySelector("input").oninput = updateProject
+
+    projectBox.appendChild(div)
+}
+
+function updateProject(){
+    previewProject.innerHTML=""
+    projectBox.querySelectorAll("input").forEach(i=>{
+        if(i.value)
+        previewProject.innerHTML += "<p>"+i.value+"</p>"
+    })
+}
+
+/* CERTIFICATE */
+function addCert(){
+    const div = document.createElement("div")
+
+    div.innerHTML = `
+    <input placeholder="Certificate">
+    <button onclick="this.parentElement.remove(); updateCert()">X</button>
+    `
+
+    div.querySelector("input").oninput = updateCert
+
+    certBox.appendChild(div)
+}
+
+function updateCert(){
+    previewCert.innerHTML=""
+    certBox.querySelectorAll("input").forEach(i=>{
+        if(i.value)
+        previewCert.innerHTML += "<li>"+i.value+"</li>"
+    })
+}
+
+</script>
+
+</body>
+</html>

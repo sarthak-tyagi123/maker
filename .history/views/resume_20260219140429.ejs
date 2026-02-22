@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resume Builder</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #f4f6f9;
+    }
+
+    /* Left: Form */
+    .form-container {
+      width: 35%;
+      padding: 20px;
+      background: #fff;
+      overflow-y: auto;
+      border-right: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .form-container h2 { margin-top: 20px; }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: #00c896;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover { background: #009e75; }
+
+    /* Right: Live Preview */
+    .preview-container {
+      width: 65%;
+      padding: 30px;
+      overflow-y: auto;
+      background: #fff;
+      box-sizing: border-box;
+    }
+
+    .resume h1, .resume h2, .resume h3 {
+      margin: 5px 0;
+    }
+
+    hr { border: none; border-top: 1px solid #ccc; margin: 15px 0; }
+
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+
+  <!-- FORM SIDE -->
+  <div class="form-container">
+    <h1>Create Resume</h1>
+    
+    <input type="text" id="fullName" placeholder="Full Name">
+    <input type="text" id="jobTitle" placeholder="Professional Title">
+    <input type="email" id="email" placeholder="Email">
+    <input type="text" id="phone" placeholder="Phone">
+    <input type="text" id="address" placeholder="Address">
+    <input type="url" id="linkedin" placeholder="LinkedIn URL">
+    <input type="url" id="github" placeholder="GitHub URL">
+
+    <h2>Professional Summary</h2>
+    <textarea id="summary" rows="3" placeholder="Summary about you"></textarea>
+
+    <h2>Skills</h2>
+    <input type="text" id="skills" placeholder="Comma separated skills">
+
+    <h2>Education</h2>
+    <input type="text" id="degree" placeholder="Degree">
+    <input type="text" id="college" placeholder="College/University">
+    <input type="text" id="eduYear" placeholder="Year">
+
+    <h2>Work Experience</h2>
+    <input type="text" id="company" placeholder="Company Name">
+    <input type="text" id="position" placeholder="Job Role">
+    <input type="text" id="expYear" placeholder="Duration">
+    <textarea id="jobDesc" rows="3" placeholder="Describe your work..."></textarea>
+
+    <h2>Projects</h2>
+    <input type="text" id="projectTitle" placeholder="Project Title">
+    <textarea id="projectDesc" rows="2" placeholder="Project Description"></textarea>
+
+    <h2>Certifications</h2>
+    <input type="text" id="certifications" placeholder="Certification">
+
+    <h2>Languages</h2>
+    <input type="text" id="languages" placeholder="Languages">
+
+    <button onclick="submitResume()">Submit Resume</button>
+  </div>
+
+  <!-- LIVE PREVIEW SIDE -->
+  <div class="preview-container">
+    <div class="resume" id="resumePreview">
+      <h1 id="resName">Your Name</h1>
+      <h3 id="resTitle">Professional Title</h3>
+      <p>Email: <span id="resEmail">email@example.com</span></p>
+      <p>Phone: <span id="resPhone">1234567890</span></p>
+      <p>Address: <span id="resAddress">Your Address</span></p>
+      <p>LinkedIn: <span id="resLinkedIn">linkedin.com/in/yourprofile</span></p>
+      <p>GitHub: <span id="resGitHub">github.com/username</span></p>
+
+      <hr>
+      <h2>Professional Summary</h2>
+      <p id="resSummary">Write a short professional summary...</p>
+
+      <hr>
+      <h2>Skills</h2>
+      <ul id="resSkills"></ul>
+
+      <hr>
+      <h2>Education</h2>
+      <p><strong id="resDegree">Degree</strong></p>
+      <p id="resCollege">College - Year</p>
+
+      <hr>
+      <h2>Work Experience</h2>
+      <p><strong id="resCompany">Company</strong></p>
+      <p id="resPosition">Position</p>
+      <p id="resExpYear">Duration</p>
+      <p id="resJobDesc">Work description...</p>
+
+      <hr>
+      <h2>Projects</h2>
+      <p><strong id="resProjectTitle">Project Title</strong></p>
+      <p id="resProjectDesc">Project Description</p>
+
+      <hr>
+      <h2>Certifications</h2>
+      <p id="resCertifications">Certification Name</p>
+
+      <hr>
+      <h2>Languages</h2>
+      <p id="resLanguages">English, Hindi</p>
+    </div>
+  </div>
+
+  <script>
+    // LIVE UPDATE FUNCTION
+    const mapFields = {
+      fullName: "resName",
+      jobTitle: "resTitle",
+      email: "resEmail",
+      phone: "resPhone",
+      address: "resAddress",
+      linkedin: "resLinkedIn",
+      github: "resGitHub",
+      summary: "resSummary",
+      skills: "resSkills",
+      degree: "resDegree",
+      college: "resCollege",
+      eduYear: "resCollege",
+      company: "resCompany",
+      position: "resPosition",
+      expYear: "resExpYear",
+      jobDesc: "resJobDesc",
+      projectTitle: "resProjectTitle",
+      projectDesc: "resProjectDesc",
+      certifications: "resCertifications",
+      languages: "resLanguages"
+    };
+
+    Object.keys(mapFields).forEach(id => {
+      const el = document.getElementById(id);
+      if(el){
+        el.addEventListener("input", ()=>{
+          if(id === "skills"){
+            const skillsList = el.value.split(",").map(s=>s.trim()).filter(s=>s);
+            document.getElementById("resSkills").innerHTML = skillsList.map(s=>`<li>${s}</li>`).join("");
+          } else if(id === "eduYear"){
+            const college = document.getElementById("degree").value || "Degree";
+            const uni = document.getElementById("college").value || "College";
+            const year = el.value || "Year";
+            document.getElementById("resCollege").textContent = `${college}, ${uni} - ${year}`;
+          } else {
+            document.getElementById(mapFields[id]).textContent = el.value || el.placeholder;
+          }
+        });
+      }
+    });
+
+    function submitResume(){
+      alert("Form submitted! You can now save this data to your server using POST.");
+      // Here you can send form data to server using fetch/AJAX
+    }
+  </script>
+
+</body>
+</html>

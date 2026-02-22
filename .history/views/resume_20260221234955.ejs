@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Resume Builder</title>
+
+<style>
+body{
+font-family: Arial;
+background:#f4f4f4;
+padding:20px;
+}
+
+form{
+background:white;
+padding:20px;
+max-width:800px;
+margin:auto;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h2{
+margin-top:30px;
+border-bottom:1px solid #ccc;
+padding-bottom:5px;
+}
+
+input,textarea{
+width:100%;
+padding:8px;
+margin:6px 0;
+border:1px solid #ccc;
+}
+
+button{
+padding:8px 12px;
+margin-top:5px;
+cursor:pointer;
+}
+
+.add-btn{
+background:#00b894;
+color:white;
+border:none;
+}
+
+.remove-btn{
+background:red;
+color:white;
+border:none;
+margin-top:5px;
+}
+</style>
+
+</head>
+<body>
+
+<form action="/generate" method="POST" enctype="multipart/form-data">
+
+<h2>Personal Info</h2>
+<input type="text" name="fullName" placeholder="Full Name" required>
+<input type="text" name="phone" placeholder="Phone">
+<input type="text" name="address" placeholder="Address">
+<input type="email" name="email" placeholder="Email">
+<input type="text" name="linkedin" placeholder="LinkedIn">
+<input type="text" name="github" placeholder="GitHub">
+<input type="file" name="photo">
+
+<!-- EDUCATION -->
+<h2>Education</h2>
+<div id="educationContainer"></div>
+<button type="button" class="add-btn" onclick="addEducation()">+ Add Education</button>
+
+<!-- SKILLS -->
+<h2>Skills</h2>
+<div id="skillsContainer"></div>
+<button type="button" class="add-btn" onclick="addSkill()">+ Add Skill</button>
+
+<!-- EXPERIENCE -->
+<h2>Experience</h2>
+<div id="experienceContainer"></div>
+<button type="button" class="add-btn" onclick="addExperience()">+ Add Experience</button>
+
+<!-- PROJECT -->
+<h2>Projects</h2>
+<div id="projectContainer"></div>
+<button type="button" class="add-btn" onclick="addProject()">+ Add Project</button>
+
+<!-- INTERNSHIP -->
+<h2>Internship</h2>
+<div id="internshipContainer"></div>
+<button type="button" class="add-btn" onclick="addInternship()">+ Add Internship</button>
+
+<!-- CERTIFICATE -->
+<h2>Certificates</h2>
+<div id="certificateContainer"></div>
+<button type="button" class="add-btn" onclick="addCertificate()">+ Add Certificate</button>
+
+<!-- HOBBY -->
+<h2>Hobbies</h2>
+<div id="hobbyContainer"></div>
+<button type="button" class="add-btn" onclick="addHobby()">+ Add Hobby</button>
+
+<!-- LANGUAGE -->
+<h2>Languages</h2>
+<div id="languageContainer"></div>
+<button type="button" class="add-btn" onclick="addLanguage()">+ Add Language</button>
+
+<br><br>
+<button type="submit">Generate Resume</button>
+
+</form>
+
+<script>
+
+// EDUCATION
+function addEducation(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input name="degree[]" placeholder="Degree">
+<input name="college[]" placeholder="College">
+<input name="year[]" placeholder="Year">
+<input name="cgpa[]" placeholder="Percentage / CGPA">
+<button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+`;
+educationContainer.appendChild(div);
+}
+
+// SKILL
+function addSkill(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input name="skill[]" placeholder="Skill">
+<button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+`;
+skillsContainer.appendChild(div);
+}
+
+// EXPERIENCE
+function addExperience(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input name="company[]" placeholder="Company">
+<input name="position[]" placeholder="Position">
+<input name="expYear[]" placeholder="Year">
+<textarea name="expDesc[]" placeholder="Description"></textarea>
+<button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+`;
+experienceContainer.appendChild(div);
+}
+
+// PROJECT
+function addProject(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input name="projectTitle[]" placeholder="Project Title">
+<textarea name="projectDesc[]" placeholder="Description"></textarea>
+<button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+`;
+projectContainer.appendChild(div);
+}
+
+// INTERNSHIP
+function addInternship(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input name="internCompany[]" placeholder="Company">
+<input name="internRole[]" placeholder="Role">
+<input name="internDuration[]" placeholder="Duration">
+<textarea name="internDesc[]" placeholder="Description"></textarea>
+<button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+`;
+internshipContainer.appendChild(div);
+}
+
+// CERTIFICATE
+function addCertificate(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input name="certificateTitle[]" placeholder="Certificate">
+<button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+`;
+certificateContainer.appendChild(div);
+}
+
+// HOBBY
+function addHobby(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input name="hobby[]" placeholder="Hobby">
+<button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+`;
+hobbyContainer.appendChild(div);
+}
+
+// LANGUAGE
+function addLanguage(){
+const div=document.createElement("div");
+div.innerHTML=`
+<input name="language[]" placeholder="Language">
+<button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+`;
+languageContainer.appendChild(div);
+}
+
+</script>
+
+</body>
+</html>
