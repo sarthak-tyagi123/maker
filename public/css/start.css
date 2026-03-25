@@ -1,60 +1,74 @@
-  body{
-            margin:0;
-            padding:0;
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-family: Arial, sans-serif;
-            background:#ffffff;
-        }
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    
+    /* Soft gradient background */
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
 
-        .container{
-            text-align:center;
-        }
+.container {
+    text-align: center;
+    
+    /* Glass effect card */
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
 
-        h1{
-            font-size:28px;
-            font-weight:normal;
-            margin-bottom:30px;
-            color:#333;
-        }
+h1 {
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: #fff;
+    letter-spacing: 1px;
+}
 
-        .btn{
-            padding:10px 22px;
-            border:1px solid #000;
-            background:white;
-            cursor:pointer;
-            font-size:15px;
-            border-radius:4px;
-            transition:0.2s;
-        }
+.btn {
+    padding: 12px 26px;
+    border: none;
+    background: #ffffff;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 25px;
+    
+    /* Smooth animation */
+    transition: all 0.3s ease;
+}
 
-        .btn:hover{
-            background:#000;
-            color:#fff;
-        }
+/* Hover effect */
+.btn:hover {
+    background: #000;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
 
-      
+/* Tablet */
 @media (min-width: 481px) and (max-width: 1024px) {
-    h1{
-        font-size:24px;
-        margin-bottom:25px;
-    }
-    .btn{
-        padding:10px 20px;
-        font-size:14px;
+    h1 {
+        font-size: 26px;
     }
 }
 
-/* Mobile: max-width 480px */
-@media (max-width: 480px){
-    h1{
-        font-size:20px;
-        margin-bottom:20px;
+/* Mobile */
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 20px;
     }
-    .btn{
-        padding:12px 24px;  /* slightly bigger for touch */
-        font-size:16px;
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .btn {
+        width: 100%;
     }
 }
